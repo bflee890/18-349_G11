@@ -1,0 +1,3 @@
+1.  The folders inside jumpers is crimpers and wires.  Inside the file crimpers, there is nothing there, but in the file wire, strippers is typedin there.
+2.  The andrew ID of the person who made this commit was ksubrama.
+3.  It was committed on 9/17/2008 at 7:52:43 with the comment "Pins!"

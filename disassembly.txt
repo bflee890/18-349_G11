@@ -1,0 +1,7 @@
+1. The entry point address of the program is 0x4000002
+
+2. The first function called seems to be g_mon_start
+
+3. The main difference between -d and -D is that -d only disassembles the sections that are expected to have instructions whereasd diassmele -D diassembles all sections no mater what they are.
+
+4. The part inside the .rodata section is text "Hello world!" with some overhead and some null following afterwards.  This should be correct as all that was stored in the .rodata is the text that was to be displayed, namely "Hello world!"
