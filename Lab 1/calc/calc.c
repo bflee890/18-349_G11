@@ -41,7 +41,7 @@ int main() {
           break;
         case '/': // Refers to division function
           result = divide(first, second);
-         printf("%d\n", result);
+          printf("%d\n", result);
           break;
         case '%': // Referst to modulo function
           result = modulo(first, second);
