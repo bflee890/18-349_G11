@@ -4,9 +4,11 @@
 @          Group Member 2 <email address>
 @ Date:    The current time & date
 
-	.file	"exit.S"
-	.text
+#include <bits/swi.h>
 
-	.global	exit
+        .file   "exit.S"
+        .text
+
+        .global exit
 exit:
-	@ Needs more code.
+        swi     EXIT_SWI
