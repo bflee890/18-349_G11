@@ -4,9 +4,15 @@
 @          Group Member 2 <email address>
 @ Date:    The current time & date
 
-	.file	"crt0.S"
-	.text
+#include <bits/swi.h>
 
-	.global	_start
+        .file   "crt0.S"
+        .text
+
+        .global _start
 _start:
-	@ Needs more code.
+        ldr     r0, [sp]
+        add     r1, sp, #4
+        bl      main
+
+        swi     EXIT_SWI
