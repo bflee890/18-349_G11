@@ -18,7 +18,6 @@ read:
         bge     return
 
         ldr     r1, =errno
-        ldr     r0, [r1]
         mvn     r0, r0
         add     r0, r0, #1
         str     r0, [r1]

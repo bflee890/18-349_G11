@@ -16,8 +16,8 @@ write:
         swi     WRITE_SWI
         cmp     r0, #0
         bge     return
-        ldr     r1, =errno
-        ldr     r0, [r1]
+		
+        ldr     r1, =errno	
         mvn     r0, r0
         add     r0, r0, #1
         str     r0, [r1]
