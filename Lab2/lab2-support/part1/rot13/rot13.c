@@ -6,20 +6,20 @@
  * Date:    The current time & date
  */
 
-#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 int main(void) {
 
-        char input [100];
-        char output [100];
+        char input [256];
+        char output [256];
         int bytes_read;
         int i;
 
         while(1)
         {
                 bytes_read = read(STDIN_FILENO, input, 100);
-                if(bytes_read == 1)
+                if(bytes_read == 1 || bytes_read == 0)
                         return 0;
                 else if(bytes_read < 0)
                         return 1;
