@@ -1,8 +1,15 @@
 @ crt0.S: Execution startup routine
 @
-@ Authors: Group Member 1 <email address>
-@          Group Member 2 <email address>
-@ Date:    The current time & date
+@ Authors: Brandon Lee <bfl> 
+@          Christopher Palmer <ctpalmer>
+@          Joogyoon Han <jongyoo1>
+@          Lawrence Tsang <ltsang>
+@
+@ Date:    October 7th 2012
+@
+@ Generates main's argc and argv parameters from the values placed on the stack
+@ by the kernel, call the main function and after it returns, exit withe return
+@ value from main
 
 #include <bits/swi.h>
 
@@ -11,8 +18,8 @@
 
         .global _start
 _start:
-        ldr     r0, [sp]
-        add     r1, sp, #4
-        bl      main
+        ldr     r0, [sp]		@ Loads argc from stack
+        add     r1, sp, #4		@ Loads argv from stack
+        bl      main			@ Jumps to main
 
-        swi     EXIT_SWI
+        swi     EXIT_SWI		@ Exits with main's return value
