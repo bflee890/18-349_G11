@@ -1,8 +1,13 @@
 @ exit.S: exit sycall wrapper
 @
-@ Authors: Group Member 1 <email address>
-@          Group Member 2 <email address>
-@ Date:    The current time & date
+@ Authors: Brandon Lee <bfl> 
+@          Christopher Palmer <ctpalmer>
+@          Joogyoon Han <jongyoo1>
+@          Lawrence Tsang <ltsang>
+@
+@ Date:    October 7th 2012
+@
+@ An assembly function that exits.
 
 #include <bits/swi.h>
 
