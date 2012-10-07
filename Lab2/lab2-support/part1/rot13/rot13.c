@@ -6,8 +6,6 @@
  * Date:    The current time & date
  */
 
-#include <stdlib.h>
-#include <unistd.h>
 
 int main(void) {
 
@@ -18,7 +16,7 @@ int main(void) {
 
         while(1)
         {
-                bytes_read = read(STDIN_FILENO, input, 100);
+                bytes_read = read(0, input, 100);
                 if(bytes_read == 1 || bytes_read == 0)
                         return 0;
                 else if(bytes_read < 0)
@@ -38,7 +36,7 @@ int main(void) {
                 }
                 output[i] = '\n';
                 output[i+1] = '\0';
-                write(STDOUT_FILENO, output, bytes_read);
+                write(1, output, bytes_read);
         }
 
 	return -255;
