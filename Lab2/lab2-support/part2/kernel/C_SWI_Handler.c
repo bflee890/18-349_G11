@@ -1,3 +1,5 @@
+#include "include/bits/swi.h" 
+
 void C_SWI_handler (unsigned swi_num, unsigned *regs)
 {
     switch (swi_num) {
