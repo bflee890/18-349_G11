@@ -6,10 +6,12 @@
  * Date:   The current time & date
  */
 
+#include "kernel.h"
 #include <exports.h>
 
 int main(int argc, char *argv[]) {
 	
+    int d;
     int* SWI_Loc =(int *) 0x000008;
     unsigned int ldrpc = 0xE51FF000;
     unsigned int swiIn, immd12, SWI_addr, origSwi1, origSwi2;
@@ -35,9 +37,13 @@ int main(int argc, char *argv[]) {
     
     /* Modify the U-boot SWI Handler */
     *(int *)SWI_addr = 0xE51FF004;
-    
-    
-    
-    
-    return SWI_addr;
+    *(int *)(SWI_addr + 0x4) = (int)&s_handler;
+
+    d = setup(argc, argv);
+
+    *(int *)SWI_addr = origSwi1;
+    *(int *)(SWI_addr + 0x4) = origSwi2;
+
+    return d;
+    //return SWI_addr;
 }
