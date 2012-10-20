@@ -22,7 +22,7 @@ setup:
 exit:
 	add	sp, sp, #15*4	@pop saved-user-registers in s_handler
 	ldmfd	sp!, {lr}	@pop lr from svc_stack
-	mov	pc, lr		@jump back to main
+	mov	pc, lr		@jump back to main	
 
 s_handler:
         sub     sp, sp, #4
@@ -35,6 +35,7 @@ s_handler:
         bl      c_swi_handler
         ldr     r2, [sp, #14*4]
         msr     spsr, r2
+	add	sp, sp, #4
         ldmfd   sp!, {r1-r12, lr}
         add     sp, sp, #4
         movs    pc, lr

@@ -1,30 +1,40 @@
+#include <bits/types.h>
 #include "include/bits/errno.h"
 #include "include/bits/fileno.h"
-#include "../echo/echo.h"
+#include <exports.h>
+
 ssize_t read(int fd, void* buf, ssize_t count) {
+
+    int i;
+    char hold;
+    char *Buf = (char *)buf;
+
     if (fd != STDIN_FILENO) 
         return -EBADF;
-    int range = buf + count; 
-    if ( ((range < 0xa0000000) && (range > 0xa3000000))||  
-         ((buf < 0xa0000000) && (buf > 0xa3000000)) )
+
+    unsigned max_size = (unsigned)buf + (unsigned)count; 
+    if ( ((unsigned)buf < 0xa0000000) || (max_size > 0xa3ffffff) )
         return -EFAULT;
-    char hold;
+
     for (i=0; i < count; i++) {
         hold = getc();
-        if (hold == EOT) 
+
+        if (hold == 4) 
             return i;
+
         if ((hold == 127) || (hold== '\b')) {
-            echo(" b \b");
+            puts("\b \b");
 	    i-=2; 
-            buff[i+1] = 0;
-	} else if ((hold == '\r') || (hold == '\n')) {
-                buf[i] = '\n';
-                echo("\n");
+            Buf[i+1] = 0;
+	} 
+	else if ((hold == '\r') || (hold == '\n')) {
+                Buf[i] = '\n';
+                putc('\n');
 		return i+1;
         }
-            buf[i] = hold;
-            echo(&hold);
-        }
+        Buf[i] = hold;
+        putc(hold);
     }
+
     return count;
 } 
