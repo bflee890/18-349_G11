@@ -1,11 +1,9 @@
-//#ifndef 'SWI.H'
-//#define 'SWI.H'
-//#include <exports.h>
+#ifndef SWI_H
+#define SWI_H
 
 #define SDRAM_BEGIN 0xa0000000
 #define SDRAM_END   0xa3ffffff
+#define ROM_BEGIN   0x00000000
+#define ROM_END	    0X00ffffff
 
-//ssize_t read(int,const void*,ssize_t);
-//ssize_t write(int,const void*, ssize_t);
-//void extern exit(int);
-//#endif
+#endif
