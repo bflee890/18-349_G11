@@ -2,8 +2,9 @@
 #include "include/bits/errno.h"
 #include "include/bits/fileno.h"
 #include "swi.h"
+#include <exports.h>
 
-ssize_t write(int fd, const void *buf, ssize_t count)
+ssize_t write(int fd, const void *buf, size_t count)
 {
     int i;
     char *Buf = (char *)buf;

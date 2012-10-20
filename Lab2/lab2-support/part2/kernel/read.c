@@ -2,8 +2,9 @@
 #include "include/bits/errno.h"
 #include "include/bits/fileno.h"
 #include "swi.h"
+#include <exports.h>
 
-ssize_t read(int fd, const void* buf, ssize_t count) {
+ssize_t read(int fd, void *buf, size_t count) {
     int i;
     char hold;
     char *Buf = (char *)buf;
@@ -20,7 +21,7 @@ ssize_t read(int fd, const void* buf, ssize_t count) {
         hold = getc();
         if (hold == 4) {
             return i;
-        } else if ((hold == 127) || (hold== '\b')) {
+        } else if ((hold == 127) || (hold == '\b')) {
             puts("\b \b");
 	    i-=2; 
             Buf[i+1] = 0;
