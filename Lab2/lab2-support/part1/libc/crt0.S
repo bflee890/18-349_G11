@@ -19,7 +19,7 @@
         .global _start
 _start:
         ldr     r0, [sp]		@ Loads argc from stack
-        add     r1, sp, #4		@ Loads argv from stack
+        ldr     r1, [sp, #4]		@ Loads argv from stack
         bl      main			@ Jumps to main
 
         swi     EXIT_SWI		@ Exits with main's return value
