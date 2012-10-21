@@ -9,27 +9,35 @@ ssize_t read(int fd, void *buf, size_t count) {
     char hold;
     char *Buf = (char *)buf;
 
+    /* If not reading into STDIN, then return error */
     if (fd != STDIN_FILENO) 
         return -EBADF;
 
+    /* If buffer is outside of valid address, then return error */
     unsigned max_addr = (unsigned)buf + (unsigned)count; 
     if ( (max_addr > SDRAM_END) || (max_addr < SDRAM_BEGIN) ||
          ((unsigned) buf > SDRAM_END) || ((unsigned)buf < SDRAM_BEGIN) )
          return -EFAULT;
 
     for (i=0; i < count; i++) {
-        hold = getc();
-        if (hold == 4) {
+        hold = getc();      // Shouldn't this have something in getc?
+        
+        /* If value is EOT char, then return right away */
+        if (hold == 4)
             return i;
-        } else if ((hold == 127) || (hold == '\b')) {
+        /* If value is delete or backspace, delete last char */
+        else if ((hold == 127) || (hold == '\b')) {
             puts("\b \b");
-	    i-=2; 
+            i-=2; 
             Buf[i+1] = 0;
-	} else if ((hold == '\r') || (hold == '\n')) {
-                Buf[i] = '\n';
-                putc('\n');
-		return i+1;
+        } 
+        /* If newline or carriage return, then output newline and return */
+        else if ((hold == '\r') || (hold == '\n')) {
+            Buf[i] = '\n';
+            putc('\n');
+            return i+1;
         }
+        /* Otherwise, just echo out character to STD_OUT */
         Buf[i] = hold;
         putc(hold);
     }

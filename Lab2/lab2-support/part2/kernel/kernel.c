@@ -39,11 +39,13 @@ int main(int argc, char *argv[]) {
     *(int *)SWI_addr = 0xE51FF004;
     *(int *)(SWI_addr + 0x4) = (int)&s_handler;
 
+    /* Call function at 0xA2000000 */
     d = setup(argc, argv);
 
+    /* Return the U-boot SWI Handler back to it's original piece */
     *(int *)SWI_addr = origSwi1;
     *(int *)(SWI_addr + 0x4) = origSwi2;
 
+    /* Return the return value of the function at 0xA2000000 */
     return d;
-    //return SWI_addr;
 }
