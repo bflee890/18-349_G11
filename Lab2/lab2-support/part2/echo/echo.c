@@ -6,19 +6,19 @@
 
 #include "../kernel/include/bits/fileno.h"
 #include "../kernel/include/bits/errno.h"
-#include "../kernel/include/swi_handler.h"
+#include "../kernel/swi_handler.h"
 int main(int argc, char** argv) {
     void* buf = (void*) (argv + argc*sizeof(char**));
-    size_t buf_size; 
-    ssize_t n = read(STDIN_FILENO,buf,buf_size )
+    size_t buf_size = 100; 
+    ssize_t n = read(STDIN_FILENO,buf,buf_size );
     if (n == -EFAULT || n == - ENFILE) {
         exit(n);
-        return (n);   
+        return n;
     }
-    n = write(STDOUT_FILENO,buf,n);
+    n = write(STDOUT_FILENO,(const void*)buf,buf_size);
     if (n == -EFAULT || n == - ENFILE) {
         exit(n);
-        return (n);   
+        return n;
     }
     exit(0);
     return 0;
