@@ -5,10 +5,10 @@
 
 #include <bits/swi.h>
 
-	.file	"exit.S"
-	.text
-
-	.global	_start
+    .file   "exit.S"
+    .text
+    
+    .global _start
 _start:
-	mov	r0, #42
-	swi	EXIT_SWI
+    mov     r0, #42
+    swi     EXIT_SWI

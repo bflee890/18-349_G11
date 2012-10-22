@@ -1,7 +1,7 @@
 PREFIX  = arm-linux-
 CC      = $(PREFIX)gcc
 OBJCOPY = $(PREFIX)objcopy
-CFLAGS  = -O2 -ffreestanding -Wall -Werror -nostdinc -I ../../part1/libc/include
+CFLAGS  = -O2 -ffreestanding -Wall -Werror -nostdinc -I ../../part1/libc/include -I ../kernel/ -I ../uboot/include -I ../kernel/include/bits/
 LDFLAGS = -nostdlib -Wl,-Ttext,$(LOAD_ADDR)
 
 LOAD_ADDR = 0xa2000000
