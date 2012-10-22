@@ -24,6 +24,12 @@ int main(void) {
     char output [256];
     int bytes_read;
     int i;
+    
+    /*for(i = 1; i < argc; i++)
+        {
+                write(STDOUT_FILENO, argv[i], 4);
+        }*/ //check if arguments are correct.
+
 
     while(1)
     {
