@@ -13,7 +13,7 @@
  * from STDIN, and put it in the buffer.  
  * If the character read is an EOT char it immediately returns, newline and 
  * carriage space, it adds a newline then returns. If a backspace, it deletes
- * the most recently read character and 
+ * the most recently read character and continues reading
  */
 
 #include "include/bits/errno.h"

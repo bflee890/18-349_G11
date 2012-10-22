@@ -1,7 +1,16 @@
-/** @file echo.c
+/*
+ * echo.c: Repeats what's written twice
  *
- * @author  Harry Q Bovik (Change this!)
- * @date    The current date
+ * Author: Brandon Lee <bfl> 
+ *         Christopher Palmer <ctpalmer>
+ *         Joogyoon Han <jongyoo1>
+ *         Lawrence Tsang <ltsang>
+ *
+ * Date:   Oct. 21, 2012
+ *
+ * When this function is called, it repeats whatever is written to STDOUT
+ * through calls to the swi function read.  And after reading is completed
+ * through just a newline or no bytes read, then it exits oout of the function
  */
 
 #include "stdlib.h"

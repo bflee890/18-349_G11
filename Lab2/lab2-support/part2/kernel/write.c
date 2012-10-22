@@ -1,3 +1,19 @@
+/*
+ * write.c: Replace the write function for the SWI Handler
+ *
+ * Author: Brandon Lee <bfl> 
+ *         Christopher Palmer <ctpalmer>
+ *         Joogyoon Han <jongyoo1>
+ *         Lawrence Tsang <ltsang>
+ *
+ * Date:   Oct. 21, 2012
+ *
+ * We replace teh write function for the SWI Handler.  We have to make sure
+ * that the file descriptor is the STDOUT.  Also, make sure it's writing in
+ * valid space namely within SDRAM and ROM.  Then, just proceed to print out
+ * the STDOUT with putc from U-boot API, and return the characters printed.
+ */
+ 
 #include "include/bits/errno.h"
 #include "include/bits/fileno.h"
 #include "include/bits/swi.h"
