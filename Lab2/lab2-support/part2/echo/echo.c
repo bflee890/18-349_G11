@@ -8,6 +8,13 @@
 #include "unistd.h"
 #include "bits/fileno.h"
 
+<<<<<<< HEAD
+=======
+#include "stdlib.h"
+#include "unistd.h"
+#include "bits/fileno.h"
+
+>>>>>>> 0168c82808430bbb273ebef82b3d1ad3174508f3
 int main(int argc, char** argv) {
 
         char buf[256];
