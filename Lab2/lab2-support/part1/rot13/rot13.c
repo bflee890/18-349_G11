@@ -25,10 +25,10 @@ int main(void) {
     int bytes_read;
     int i;
     
-    /*for(i = 1; i < argc; i++)
-        {
+    for(i = 1; i < argc; i++)
+    {
                 write(STDOUT_FILENO, argv[i], 4);
-        }*/ //check if arguments are correct.
+    } //check if arguments are correct.
 
 
     while(1)
