@@ -19,7 +19,6 @@
 #include "include/bits/errno.h"
 #include "include/bits/swi.h"
 #include "include/bits/fileno.h"
-#include "swi_handler.h"
 #include <exports.h>
 
 ssize_t read(int fd, void *buf, size_t count) {

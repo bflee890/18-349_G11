@@ -18,7 +18,7 @@
 #include "unistd.h"
 #include "bits/fileno.h" 
  
-int main(void) {
+int main(int argc, char *argv[]) {
 
     char input [256];
     char output [256];

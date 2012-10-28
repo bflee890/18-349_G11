@@ -17,7 +17,6 @@
 #include "include/bits/errno.h"
 #include "include/bits/fileno.h"
 #include "include/bits/swi.h"
-#include "swi_handler.h"
 #include <exports.h>
 
 ssize_t write(int fd, const void *buf, size_t count)
