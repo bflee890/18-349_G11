@@ -1,3 +1,16 @@
+/*
+ * c_swi_handler.c: C_SWI_handler which the swi handler calls
+ *
+ * Author: Brandon Lee <bfl> 
+ *         Christopher Palmer <ctpalmer>
+ *         Joogyoon Han <jongyoo1>
+ *         Lawrence Tsang <ltsang>
+ *
+ * Date:   Oct. 21, 2012
+ *
+ * A switch statement that tells which SWI statement should happen when called
+ */
+ 
 #include <bits/types.h>
 
 void exit(int status);

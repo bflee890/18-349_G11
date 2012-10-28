@@ -1,3 +1,13 @@
+@ s_handler.S: SWI Handler
+@
+@ Author: Brandon Lee <bfl> 
+@         Christopher Palmer <ctpalmer>
+@         Joogyoon Han <jongyoo1>
+@         Lawrence Tsang <ltsang>
+@
+@ Date:   Oct 21, 2012
+@
+@ The code given to us and works as intended
 
 	.file	"s_handler.S"
 	.text

@@ -1,20 +1,22 @@
-/** @file echo.c
-*
-* @author Harry Q Bovik (Change this!)
-* @date The current date
-*/
+/*
+ * echo.c: Repeats what's written twice
+ *
+ * Author: Brandon Lee <bfl> 
+ *         Christopher Palmer <ctpalmer>
+ *         Joogyoon Han <jongyoo1>
+ *         Lawrence Tsang <ltsang>
+ *
+ * Date:   Oct. 21, 2012
+ *
+ * When this function is called, it repeats whatever is written to STDOUT
+ * through calls to the swi function read.  And after reading is completed
+ * through just a newline or no bytes read, then it exits oout of the function
+ */
 
 #include "stdlib.h"
 #include "unistd.h"
 #include "bits/fileno.h"
 
-<<<<<<< HEAD
-=======
-#include "stdlib.h"
-#include "unistd.h"
-#include "bits/fileno.h"
-
->>>>>>> 0168c82808430bbb273ebef82b3d1ad3174508f3
 int main(int argc, char** argv) {
 
         char buf[256];

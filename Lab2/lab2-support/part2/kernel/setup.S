@@ -1,3 +1,14 @@
+@ setup.S: setting up stack and calling program
+@
+@ Author: Brandon Lee <bfl> 
+@         Christopher Palmer <ctpalmer>
+@         Joogyoon Han <jongyoo1>
+@         Lawrence Tsang <ltsang>
+@
+@ Date:   Oct 21, 2012
+@
+@ Switch the cpsr to USER mode and then set the user stack to start at 
+@ 0xA3000000 and then, jump to the user application at 0xA2000000
     
     .file	"setup.S"
     .text
