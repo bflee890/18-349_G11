@@ -8,10 +8,21 @@
  * @author Kartik Subramanian <ksubrama@andrew.cmu.edu>
  * @date 2008-10-29
  */
+@ exit.S: exit sycall wrapper
+@
+@ Authors: Brandon Lee <bfl>
+@          Christopher Palmer <ctpalmer>
+@          Jongyoon Han <jongyoo1>
+@          Lawrence Tsang <ltsang>
+@
+@ Date:    October 7th 2012
+@
+@ An assembly function that exits.
 
 #include <asm.h>
+#include <bits/swi.h>
 
 	.file "exit.S"
 
 FUNC(exit)
-	@ Add code here.  Put your name at the top.
+	swi	EXIT_SWI
