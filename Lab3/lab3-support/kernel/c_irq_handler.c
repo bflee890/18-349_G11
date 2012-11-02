@@ -8,7 +8,7 @@ void c_irq_handler()
 {
     //i_bit indicates if timer interrupt has occurred
     uint32_t i_bit = reg_read(INT_ICPR_ADDR); 
-    if(i_bit & 0x04000000)
+    if(i_bit & INT_OSTMR_0)
     {
         printf("IRQ!\n");
 	//reload the match register with the max value
