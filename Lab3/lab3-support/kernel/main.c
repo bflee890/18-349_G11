@@ -35,38 +35,63 @@ int kmain(int argc, char** argv, uint32_t table)
 
     int d;
     int *SWI_Loc =(int *) 0x08;
+    int *IRQ_Loc =(int *) 0x18;
     unsigned int ldrpc = 0xE51FF000;
-    unsigned int swiIn, immd12, SWI_addr, origSwi1, origSwi2;
+    unsigned int checkAddr, immd12, SWI_addr, origSwi1, origSwi2, IRQ_addr;
+    unsigned int origIrq1, origIrq2;
 
     /* Get the instruction at the SWI location and compare it to the
      * instruction "ldr pc, [pc, #immd12]" */
-    swiIn = ((unsigned int)(*SWI_Loc)) - ldrpc;
-    if((swiIn>>12) != 0x800 && (swiIn>>12) != 0)
+    checkAddr = ((unsigned int)(*SWI_Loc)) - ldrpc;
+    if((checkAddr>>12) != 0x800 && (checkAddr>>12) != 0)
         return 0xbadc0de;
     /* Find the address that the ldr pc wants to go to */
-    else if((swiIn>>12) == 0x800) {
-        immd12 = swiIn & 0xFFF;     // up bit is turned on
+    else if((checkAddr>>12) == 0x800) {
+        immd12 = checkAddr & 0xFFF;     // up bit is turned on
         SWI_addr = *(int *) ((int) SWI_Loc + immd12 + 0x8);
     }
     else {
-        immd12 = swiIn & 0xFFF;     // up bit is turned off
+        immd12 = checkAddr & 0xFFF;     // up bit is turned off
         SWI_addr = *(int *) ((int) SWI_Loc - immd12 + 0x8);
     }
 
-    /* Save original addresses that were originally there */
+    /* Get the instruction at the IRQ location and compare it to the
+     * instruction "ldr pc, [pc, #immd12]" */
+    checkAddr = ((unsigned int)(*IRQ_Loc)) - ldrpc;
+    if((checkAddr>>12) != 0x800 && (checkAddr>>12) != 0)
+        return 0xbadc0de;
+    /* Find the address that the ldr pc wants to go to */
+    else if((checkAddr>>12) == 0x800) {
+        immd12 = checkAddr & 0xFFF;     // up bit is turned on
+        IRQ_addr = *(int *) ((int) IRQ_Loc + immd12 + 0x8);
+    }
+    else {
+        immd12 = checkAddr & 0xFFF;     // up bit is turned off
+        IRQ_addr = *(int *) ((int) IRQ_Loc - immd12 + 0x8);
+    }
+
+    /* Save original addresses that were originally at SWI location */
     origSwi1 = *(int *)SWI_addr;
     origSwi2 = *(int *)(SWI_addr + 0x4);
+    origIrq1 = *(int *)IRQ_addr;
+    origIrq2 = *(int *)(IRQ_addr + 0x4);
+    
 
     /* Modify the U-boot SWI Handler */
     *(int *)SWI_addr = 0xE51FF004;
     *(int *)(SWI_addr + 0x4) = (int)&s_handler;
+    // Need to modify the IRQ address to point towards our handler
+    *(int *)IRQ_addr = 0xE51FF004;
+    
 
-    /* Call function at 0xA2000000 */
+    /* Call function at 0xA0000000 */
     d = setup(argc, argv);
 
     /* Return the U-boot SWI Handler back to it's original piece */
     *(int *)SWI_addr = origSwi1;
     *(int *)(SWI_addr + 0x4) = origSwi2;
+    *(int *)IRQ_addr = origIrq1;
+    *(int *)(IRQ_addr + 0x4) = origIrq2;
 
     /* Return the return value of the function at 0xA2000000 */
     return d;
