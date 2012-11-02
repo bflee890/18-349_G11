@@ -19,11 +19,8 @@
 #include <bits/errno.h>
 #include <bits/fileno.h>
 #include <exports.h>
-
-#define SDRAM_BEGIN 0xa0000000
-#define SDRAM_END   0xa3ffffff
-#define ROM_BEGIN   0x00000000
-#define ROM_END     0X00ffffff
+#include "mem.h"
+#include "sys.h"
 
 ssize_t read(int fd, void *buf, size_t count) {
     unsigned i;
