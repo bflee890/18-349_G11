@@ -68,7 +68,8 @@ int kmain(int argc, char** argv, uint32_t table)
     }
     else {
         immd12 = checkAddr & 0xFFF;     // up bit is turned off
-
+	IRQ_addr = *(int *) ((int) IRQ_Loc - immd12 + 0x8);
+    }
 
     /* Save original addresses that were originally at SWI location */
     origSwi1 = *(int *)SWI_addr;
