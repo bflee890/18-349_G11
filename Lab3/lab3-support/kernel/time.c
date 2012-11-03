@@ -4,6 +4,6 @@
 
 unsigned long time()
 {
-    uint32_t cur_time = reg_read(OSTMR_OSCR_ADDR);
-    return (unsigned long) cur_time;
+    return get_oscr();
 }
+

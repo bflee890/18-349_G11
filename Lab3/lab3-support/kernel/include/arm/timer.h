@@ -36,12 +36,24 @@
 
 #define OSTMR_FREQ            3686400      /* Oscillator frequency in hz */
 
+
 #ifndef ASSEMBLER
 
+#define PENDING 	      1
+#define RECEIEVED	      0
+#define TICKS_FROM_MILLIS(x) (x*OSTMR_FREQ/1000)
+#define MIN_OFFSET            100
+#define CLEAR                 0
 /* Add your C code here.  Put your group name at the top! */
 INLINE unsigned long  get_oscr(void) 
 {
-    retrun (unsigned long) &OSTMR_OSCR_ADDR;
+    return (unsigned long) &OSTMR_OSCR_ADDR;
+}
+
+volatile int wait(unsigned long millis);
+
+void os_timer_interrupt_handler(void) {
+
 #endif /* ASSEMBLER */
 
 #endif /* _TIMER_H_ */
