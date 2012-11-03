@@ -32,6 +32,7 @@ void c_swi_handler(unsigned swi_num, unsigned *regs)
                     break;
                 case SLEEP_SWI:
                     sleep((unsigned long)regs[0]);
+		    break;
                 default: 
                     exit(0x0badc0de); 
                     break;
