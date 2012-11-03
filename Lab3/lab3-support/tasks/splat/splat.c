@@ -7,6 +7,14 @@
 
 int main(int argc, char** argv)
 {
-	/* Add code here -- put your names at the top. */
+	int i;
+	char glyphArray[] = "|/-\\";
+	while (true) {
+		for (i = 0; i < 4; i++) {
+			putchar(glyphArray[i]);
+			sleep(200);
+			putchar('\b');
+		}
+	}
 	return 0;
 }
