@@ -53,7 +53,7 @@ INLINE unsigned long  get_oscr(void)
 
 volatile int wait(unsigned long millis);
 
-void os_timer_interrupt_handler(void) {
+void os_timer_interrupt_handler(void); 
 
 #endif /* ASSEMBLER */
 
