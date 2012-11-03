@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 {
 	int i;
 	char glyphArray[] = "|/-\\";
-	while (true) {
+	while (1) {
 		for (i = 0; i < 4; i++) {
 			putchar(glyphArray[i]);
 			sleep(200);
