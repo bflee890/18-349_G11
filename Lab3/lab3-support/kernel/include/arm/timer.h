@@ -40,18 +40,20 @@
 #ifndef ASSEMBLER
 
 #define PENDING 	      1
-#define RECEIEVED	      0
+#define RECEIVED	      0
 #define TICKS_FROM_MILLIS(x) (x*OSTMR_FREQ/1000)
 #define MILLIS_FROM_TICKS(x) (x*1000/OSTMR_FREQ)
 #define MIN_OFFSET            100
 #define CLEAR                 0
+
+#include <inline.h>
 /* Add your C code here.  Put your group name at the top! */
 INLINE unsigned long  get_oscr(void) 
 {
-    return (unsigned long) MILLIS_FROM_TICKS(&OSTMR_OSCR_ADDR);
+    return (unsigned long) MILLIS_FROM_TICKS(*(unsigned int *)OSTMR_OSCR_ADDR);
 }
 
-volatile int wait(unsigned long millis);
+volatile int * wait(unsigned long millis);
 
 void os_timer_interrupt_handler(void); 
 

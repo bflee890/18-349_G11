@@ -14,6 +14,6 @@ void sleep(unsigned long millis)
 //	if(cur_time >= next_time)
 //	    break;
 //    }
-    volatile int loop = wait(millis); 
-    while (loop != 0){}
+    volatile int * loop = wait(millis); 
+    while (*loop != 0){}
 }
