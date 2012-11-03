@@ -1,5 +1,10 @@
 /** @file splat.c
  *
+ * Authors:	Brandon Lee <bfl> 
+ * 			Christopher Palmer <ctpalmer>
+ * 			Jongyoon Han <jongyoo1>
+ *			Lawrence Tsang <ltsang>
+ *
  * @brief Displays a spinning cursor.
  *
  * Links to libc.
