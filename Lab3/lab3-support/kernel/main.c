@@ -21,6 +21,7 @@
 #include <arm/exception.h>
 #include <arm/interrupt.h>
 #include <arm/timer.h>
+#include <arm/reg.h>
 
 #include "kernel.h"
 
@@ -39,6 +40,7 @@ int kmain(int argc, char** argv, uint32_t table)
     unsigned int ldrpc = 0xE51FF000;
     unsigned int checkAddr, immd12, SWI_addr, origSwi1, origSwi2, IRQ_addr;
     unsigned int origIrq1, origIrq2;
+    uint32_t cur_time, next_time;
 
     /* Get the instruction at the SWI location and compare it to the
      * instruction "ldr pc, [pc, #immd12]" */
@@ -67,7 +69,7 @@ int kmain(int argc, char** argv, uint32_t table)
     }
     else {
         immd12 = checkAddr & 0xFFF;     // up bit is turned off
-        IRQ_addr = *(int *) ((int) IRQ_Loc - immd12 + 0x8);
+	IRQ_addr = *(int *) ((int) IRQ_Loc - immd12 + 0x8);
     }
 
     /* Save original addresses that were originally at SWI location */
@@ -82,10 +84,20 @@ int kmain(int argc, char** argv, uint32_t table)
     *(int *)(SWI_addr + 0x4) = (int)&s_handler;
     // Need to modify the IRQ address to point towards our handler
     *(int *)IRQ_addr = 0xE51FF004;
-    
+    *(int *)(IRQ_addr + 0x4) = (int)&i_handler;
+
+    cur_time = reg_read(OSTMR_OSCR_ADDR);
+    next_time = cur_time + 0x00010000;
+    reg_write(OSTMR_OSMR_ADDR(0), next_time); //set the next time interrupt will occur.
+    reg_set(OSTMR_OIER_ADDR, OSTMR_OIER_E0); //set the corresponding OIER bit
+    reg_set(INT_ICMR_ADDR, 0x04000000); //set the corresponding ICMR bit
 
     /* Call function at 0xA0000000 */
     d = setup(argc, argv);
+
+    reg_clear(INT_ICMR_ADDR, 0x04000000); //clear ICMR bit
+    reg_clear(OSTMR_OIER_ADDR, OSTMR_OIER_E0); //clear OIER bit
+    reg_write(OSTMR_OSMR_ADDR(0), 0x00000000); //clear OSMR(0) register   
 
     /* Return the U-boot SWI Handler back to it's original piece */
     *(int *)SWI_addr = origSwi1;
