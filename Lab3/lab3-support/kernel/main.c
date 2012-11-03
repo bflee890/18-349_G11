@@ -21,6 +21,7 @@
 #include <arm/exception.h>
 #include <arm/interrupt.h>
 #include <arm/timer.h>
+#include <arm/reg.h>
 
 #include "kernel.h"
 
@@ -67,8 +68,7 @@ int kmain(int argc, char** argv, uint32_t table)
     }
     else {
         immd12 = checkAddr & 0xFFF;     // up bit is turned off
-        IRQ_addr = *(int *) ((int) IRQ_Loc - immd12 + 0x8);
-    }
+
 
     /* Save original addresses that were originally at SWI location */
     origSwi1 = *(int *)SWI_addr;
@@ -82,11 +82,11 @@ int kmain(int argc, char** argv, uint32_t table)
     *(int *)(SWI_addr + 0x4) = (int)&s_handler;
     // Need to modify the IRQ address to point towards our handler
     *(int *)IRQ_addr = 0xE51FF004;
-    
+    *(int *)(IRQ_addr + 0x4) = (int)&i_handler;
 
     /* Call function at 0xA0000000 */
     d = setup(argc, argv);
-
+    
     /* Return the U-boot SWI Handler back to it's original piece */
     *(int *)SWI_addr = origSwi1;
     *(int *)(SWI_addr + 0x4) = origSwi2;
