@@ -39,7 +39,9 @@
 #ifndef ASSEMBLER
 
 /* Add your C code here.  Put your group name at the top! */
-
+INLINE unsigned long  get_oscr(void) 
+{
+    retrun (unsigned long) &OSTMR_OSCR_ADDR;
 #endif /* ASSEMBLER */
 
 #endif /* _TIMER_H_ */
