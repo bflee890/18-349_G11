@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <arm/timer.h>
+
 /** @file typo.c
  *
  * Authors:	Brandon Lee <bfl> 
@@ -11,20 +14,16 @@
  */
 
 int main(int argc, char** argv)
-{
-	struct timeval start, end;
+{	
+	float start, end;
 	char inputString[50];
-	double mtime, secs, usecs;
 	while (1) {
 		printf("> ");
-		gettimeofday(&start, NULL);
+		start = (float) (MILLIS_FROM_TICKS(time()) / 1000);
 		fgets(inputString, 50, stdin);
+		end = (float) (MILLIS_FROM_TICKS(time()) / 1000);
 		printf("%s", inputString);
-		gettimeofday(&end, NULL);
-		secs  = end.tv_sec  - start.tv_sec;
-		usecs = end.tv_usec - start.tv_usec;
-		mtime = (secs + usecs/1000000.0);
-		printf("%0.1f\n", mtime);
+		printf("%0.1f\n", start-end);
 	}
 	return 0;
 }
