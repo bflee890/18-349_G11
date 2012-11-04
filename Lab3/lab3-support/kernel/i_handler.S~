@@ -23,5 +23,4 @@ i_handler:
         msr     spsr, r2
         ldmfd   sp!, {r0-r12, lr}
         add     sp, sp, #4
-        movs	pc, lr
-
+        subs    pc, lr, #4
