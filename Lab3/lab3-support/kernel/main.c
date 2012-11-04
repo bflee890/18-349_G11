@@ -24,7 +24,7 @@
 #include <arm/reg.h>
 
 #include "kernel.h"
-
+extern void setup_irq_stack();
 uint32_t global_data;
 
 int kmain(int argc, char** argv, uint32_t table)
@@ -86,10 +86,9 @@ int kmain(int argc, char** argv, uint32_t table)
     *(int *)IRQ_addr = 0xE51FF004;
     *(int *)(IRQ_addr + 0x4) = (int)&i_handler;
 
-
+    // setup irq stack
+    setup_irq_stack();
     initializeTimer(); 
-
-
     /* Begin the interrupt cycle to increment our own timer */
     //cur_time = reg_read(OSTMR_OSCR_ADDR), setting to 0 so should be ;
     next_time = TICKS_FROM_MILLIS(1); // notes next interrupt time
