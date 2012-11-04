@@ -1,4 +1,3 @@
-#include <types.h>
 #include <arm/timer.h>
 #include <arm/reg.h>
 
@@ -14,6 +13,7 @@ void sleep(unsigned long millis)
 //	if(cur_time >= next_time)
 //	    break;
 //    }
-    volatile int * loop = wait(millis); 
-    while (*loop != 0){}
+    unsigned int end_time = get_clock() + (unsigned int) millis;
+    (volatile unsigned int) * loop =get_vclock(); 
+    while (*loop < end_time){}
 }
