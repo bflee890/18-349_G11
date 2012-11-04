@@ -14,6 +14,13 @@ void c_irq_handler()
 	//reload the match register with the max value
 	reg_write(OSTMR_OSMR_ADDR(0), 0xffffffff); 
 	reg_set(OSTMR_OSSR_ADDR, OSTMR_OSSR_M0); // clear OSSR bit */
-        os_timer_interrupt_handler();
+        //os_timer_interrupt_handler();
+
+        cur_time = reg_read(OSTMR_OSCR_ADDR);
+        next_time = cur_time + 0x00010000; // notes next interrupt time
+        reg_write(OSTMR_OSMR_ADDR(0), next_time); // writes it in to OSMR
+        reg_set(OSTMR_OSSR_ADDR, 0x1);  // clears OSSR to allow intterupt
+
+        incrTimer();  // increases personal timer
     }
 }
