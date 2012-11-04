@@ -14,6 +14,6 @@ void sleep(unsigned long millis)
 //	    break;
 //    }
     unsigned int end_time = get_clock() + (unsigned int) millis;
-    volatile unsigned int * loop =get_vclock(); 
+    (volatile unsigned int) * loop =get_vclock(); 
     while (*loop < end_time){}
 }

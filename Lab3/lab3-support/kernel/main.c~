@@ -86,7 +86,7 @@ int kmain(int argc, char** argv, uint32_t table)
     *(int *)(IRQ_addr + 0x4) = (int)&i_handler;
 
     // setup irq stack
-    irq_stack();
+    irq_setup();
     initializeTimer(); 
     /* Begin the interrupt cycle to increment our own timer */
     //cur_time = reg_read(OSTMR_OSCR_ADDR), setting to 0 so should be ;

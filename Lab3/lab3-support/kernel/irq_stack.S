@@ -1,19 +1,16 @@
-	.file   "irq_stack.S"
 
-FUNC(irq_stack)
-	/*
-	 * Branch immediately to main without altering the execution environment.
-	 * This indirection is needed to guarantee that the program entry point is
-	 * LOAD_ADDR (probably 0xa3000000) without placing strict
-	 * requirements on the layout of kernel.c.  Bit first, provide main with the
-	 * jump table address as one of its arguments.
-	 */
-	str 	sp!,r3
+        .file   "irq_stack.S"
+        .text
+
+        .global irq_stack
+irq_stack:
+	stmfd 	sp!,{r2, r3}
         mrs     r3,cpsr
-        ORR 	r3,r3, 0x40
+        mov	r2, #0x40
+        ORR 	r3,r3, r2
         msr     cpsr,r3
         ldr 	sp, =0xa1000000
-        BIC 	r3,r3,0x40	
+        BIC 	r3,r3,r2	
         msr     cpsr,r3
-        ldr 	r3,sp 
+        ldmfd 	sp!, {r2, r3} 
         mov     pc,lr

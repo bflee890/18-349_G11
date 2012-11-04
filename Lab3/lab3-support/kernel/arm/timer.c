@@ -34,7 +34,7 @@ unsigned long get_oscr(void)
 unsigned int get_clock() {
 	return timer;
 }
-(volatile unsigned int)* get_vclock() {
+volatile unsigned int * get_vclock() {
 	return &timer;
 }
 void initializeTimer(void)

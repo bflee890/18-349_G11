@@ -26,7 +26,6 @@ int main(int argc, char** argv)
 		printf("> ");
 		start = time();
 		bytes_read = read(STDIN_FILENO, inputString, 50);
-		write(STDOUT_FILENO, inputString, bytes_read);
 		end = time();
                 
 		write(STDOUT_FILENO, inputString, bytes_read);
