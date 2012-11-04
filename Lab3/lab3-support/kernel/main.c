@@ -94,7 +94,7 @@ int kmain(int argc, char** argv, uint32_t table)
     reg_write(OSTMR_OSMR_ADDR(0), next_time);
     reg_set(OSTMR_OIER_ADDR, OSTMR_OIER_E0); // allow OSMR0 to intterrupt
     reg_write(OSTMR_OSCR_ADDR, 0x0); // clear the current timer
-    reg_set(INT_ICMR_ADDR, 0x04000000); //set the corresponding ICMR bit
+    reg_write(INT_ICMR_ADDR, 0x04000000); //set the corresponding ICMR bit
 
     /* Call function at 0xA0000000 */
     d = setup(argc, argv);
