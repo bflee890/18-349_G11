@@ -88,16 +88,15 @@ int kmain(int argc, char** argv, uint32_t table)
 
 
     initializeTimer(); 
-    reg_set(INT_ICMR_ADDR, 0x04000000); //set the corresponding ICMR bit
 
-    reg_clear(OSTMR_OSCR_ADDR, 0x0); // clear the current timer
-    reg_set(OSTMR_OIER_ADDR, OSTMR_OIER_E0); // allow OSMR0 to intterrupt
 
     /* Begin the interrupt cycle to increment our own timer */
-    cur_time = reg_read(OSTMR_OSCR_ADDR);
-    next_time = cur_time + 0x00010000; // notes next interrupt time
+    //cur_time = reg_read(OSTMR_OSCR_ADDR), setting to 0 so should be ;
+    next_time = TICKS_FROM_MILLIS(1); // notes next interrupt time
     reg_write(OSTMR_OSMR_ADDR(0), next_time);
-
+    reg_set(OSTMR_OIER_ADDR, OSTMR_OIER_E0); // allow OSMR0 to intterrupt
+    reg_write(OSTMR_OSCR_ADDR, 0x0); // clear the current timer
+    reg_set(INT_ICMR_ADDR, 0x04000000); //set the corresponding ICMR bit
 
     /* Call function at 0xA0000000 */
     d = setup(argc, argv);
