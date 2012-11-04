@@ -99,9 +99,8 @@ int kmain(int argc, char** argv, uint32_t table)
     /* Call function at 0xA0000000 */
     d = setup(argc, argv);
 
-    reg_write(INT_ICMR_ADDR, 0x04000000); //clear ICMR bit
-    reg_write(OSTMR_OIER_ADDR, OSTMR_OIER_E0); //clear OIER bit
-    reg_write(OSTMR_OSMR_ADDR(0), 0x00000000); //clear OSMR(0) register   
+    reg_clear(INT_ICMR_ADDR, 0x04000000); //clear ICMR bit
+    reg_clear(OSTMR_OIER_ADDR, OSTMR_OIER_E0); //clear OIER bit
 
     /* Return the U-boot SWI Handler back to it's original piece */
     *(int *)SWI_addr = origSwi1;

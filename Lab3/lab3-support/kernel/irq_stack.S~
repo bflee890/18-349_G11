@@ -4,15 +4,25 @@
 
         .global irq_stack
 irq_stack:
-	stmfd 	sp!,{r2, r3, r4}
-        mrs     r3,cpsr
-        mov	r2, #0x40
-        mov     r4, sp             @ store current sp
-        ORR 	r3,r3, r2
-        msr     cpsr,r3
-        ldr 	sp, =0xa1000000
-        BIC 	r3,r3,r2	
-        msr     cpsr,r3
-        mov     sp, r4             @ restore sp
-        ldmfd 	sp!, {r2, r3, r4} 
+	stmfd 	sp!,{r1, r2, r3, r4,lr}
+
+        mov     r4, sp            @ store current sp
+        mrs     r1, cpsr          @ store current cpsr
+        mrs     r3, cpsr
+
+      @  mov	r2, #0xFF         @ clear user mode
+        bic     r3, r3, #0xFF
+        @mov     r2, #0x92         @ change to IRQ mode
+        
+        add 	r3, r3, #0x92
+        msr     spsr, r3
+        mov     lr, pc
+        movs    pc, lr
+        ldr 	sp, =0xa3f00000
+        	
+        msr     spsr, r1           @ restore cpsr
+        mov     lr, pc
+        movs    pc, lr
+        @ mov     sp, r4             @ restore sp
+        ldmfd 	sp!, {r1, r2, r3, r4,lr} 
         mov     pc,lr

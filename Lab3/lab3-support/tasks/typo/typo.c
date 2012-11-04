@@ -17,7 +17,7 @@
 
 int main(int argc, char** argv)
 {	
-	unsigned long start, end;
+	unsigned long start, end, total, sec, tenthsec;
         int bytes_read;
 	char inputString[50];
         /*char dur[50];
@@ -26,11 +26,14 @@ int main(int argc, char** argv)
 		printf("> ");
 		start = time();
 		bytes_read = read(STDIN_FILENO, inputString, 50);
-		write(STDOUT_FILENO, inputString, bytes_read);
 		end = time();
                 
-		write(STDOUT_FILENO, inputString, bytes_read);
-                printf("time taken = %lu\n", (end-start));
+                total = end-start;
+                tenthsec = (total % 1000)/100;
+                sec = total/1000;
+
+                
+                printf("time taken = %lu.%lus\n", sec, tenthsec);
 		
 	//}
 	return (int)(end-start);
