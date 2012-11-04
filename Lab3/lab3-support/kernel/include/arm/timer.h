@@ -52,6 +52,8 @@ unsigned long  get_oscr(void);
 volatile int * wait(unsigned long millis);
 
 void os_timer_interrupt_handler(void); 
+void incrTimer(void);
+void initializeTimer(void);
 
 #endif /* ASSEMBLER */
 

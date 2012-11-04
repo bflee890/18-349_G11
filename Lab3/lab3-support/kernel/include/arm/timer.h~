@@ -48,7 +48,7 @@
 
 
 /* Add your C code here.  Put your group name at the top! */
-unsigned int  get_oscr(void);
+unsigned long  get_oscr(void);
 volatile int * wait(unsigned long millis);
 
 void os_timer_interrupt_handler(void); 

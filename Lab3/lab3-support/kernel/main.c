@@ -40,6 +40,7 @@ int kmain(int argc, char** argv, uint32_t table)
     unsigned int ldrpc = 0xE51FF000;
     unsigned int checkAddr, immd12, SWI_addr, origSwi1, origSwi2, IRQ_addr;
     unsigned int origIrq1, origIrq2;
+    uint32_t cur_time, next_time;
 
     /* Get the instruction at the SWI location and compare it to the
      * instruction "ldr pc, [pc, #immd12]" */
@@ -85,9 +86,18 @@ int kmain(int argc, char** argv, uint32_t table)
     *(int *)IRQ_addr = 0xE51FF004;
     *(int *)(IRQ_addr + 0x4) = (int)&i_handler;
 
-    reg_clear(OSTMR_OSCR_ADDR, 0x0); // clear the current timer
-    reg_clear(OSTMR_OIER_ADDR, 0x0000); //clear OIER 
+
+    initializeTimer(); 
     reg_set(INT_ICMR_ADDR, 0x04000000); //set the corresponding ICMR bit
+
+    reg_clear(OSTMR_OSCR_ADDR, 0x0); // clear the current timer
+    reg_set(OSTMR_OIER_ADDR, OSTMR_OIER_E0); // allow OSMR0 to intterrupt
+
+    /* Begin the interrupt cycle to increment our own timer */
+    cur_time = reg_read(OSTMR_OSCR_ADDR);
+    next_time = cur_time + 0x00010000; // notes next interrupt time
+    reg_write(OSTMR_OSMR_ADDR(0), next_time);
+
 
     /* Call function at 0xA0000000 */
     d = setup(argc, argv);
