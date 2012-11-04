@@ -25,6 +25,6 @@ void os_timer_interrupt_handler(void) {
 
 unsigned long get_oscr(void) 
 {
-    unsigned long ticks = reg_read64(OSTMR_OSCR_ADDR);
+    unsigned long ticks = reg_read(OSTMR_OSCR_ADDR);
     return (unsigned long) (MILLIS_FROM_TICKS(ticks));
 }
