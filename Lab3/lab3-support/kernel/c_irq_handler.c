@@ -17,7 +17,7 @@ void c_irq_handler()
         //os_timer_interrupt_handler();
 
         cur_time = reg_read(OSTMR_OSCR_ADDR);
-        next_time = cur_time + 0x00010000; // notes next interrupt time
+        next_time = cur_time + TICKS_FROM_MILLIS(1); // notes next interrupt time
         reg_write(OSTMR_OSMR_ADDR(0), next_time); // writes it in to OSMR
         reg_set(OSTMR_OSSR_ADDR, 0x1);  // clears OSSR to allow intterupt
 
