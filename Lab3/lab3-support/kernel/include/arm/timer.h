@@ -36,7 +36,6 @@
 
 #define OSTMR_FREQ            3686400      /* Oscillator frequency in hz */
 
-
 #ifndef ASSEMBLER
 
 #define PENDING 	      1
@@ -55,6 +54,8 @@ void os_timer_interrupt_handler(void);
 void incrTimer(void);
 void initializeTimer(void);
 
+unsigned int get_clock();
+(volatile unsigned int)* get_vclock();
 #endif /* ASSEMBLER */
 
 #endif /* _TIMER_H_ */
