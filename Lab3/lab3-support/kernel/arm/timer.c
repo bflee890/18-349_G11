@@ -4,7 +4,7 @@
 volatile int ostmr_mr0  = 0; // 0 not waiting for interrupt
                            // 1 waiting for interrupt
 volatile uint32_t timer;
-volatile int * wait(unsigned long millis) 
+/*volatile int * wait(unsigned long millis) 
 {
     unsigned long offset = TICKS_FROM_MILLIS(millis);
     if (millis < MIN_OFFSET) {
@@ -29,7 +29,14 @@ unsigned long get_oscr(void)
     unsigned long ticks = reg_read64(OSTMR_OSCR_ADDR);
     return (unsigned long) (MILLIS_FROM_TICKS(ticks));
 }
+*/
 
+unsigned int get_clock() {
+	return timer;
+}
+(volatile unsigned int)* get_vclock() {
+	return &timer;
+}
 void initializeTimer(void)
 {
     timer = 0;
