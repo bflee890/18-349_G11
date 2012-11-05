@@ -15,8 +15,9 @@
 
     .global     setup
 setup:
-    stmfd   sp!, {lr}           @push lr into svc_stack
+    stmfd   sp!, {r8}           @ push uboot r8 onto stack
 
+    stmfd   sp!, {lr}           @push lr into svc_stack
    @ mrs     r2, cpsr            @switch to irq_mode
    @ bic     r2, r2, #0xff
    @ add     r2, r2, #0x92

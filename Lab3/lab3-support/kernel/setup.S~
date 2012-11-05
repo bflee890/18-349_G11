@@ -16,15 +16,16 @@
     .global     setup
 setup:
     stmfd   sp!, {lr}           @push lr into svc_stack
+    stmfd   sp!, {r8}           @ push uboot r8 onto stack
 
-    mrs     r2, cpsr            @switch to irq_mode
-    bic     r2, r2, #0xff
-    add     r2, r2, #0x92
-    msr     spsr, r2
-    mov     lr, pc
-    movs    pc, lr
+   @ mrs     r2, cpsr            @switch to irq_mode
+   @ bic     r2, r2, #0xff
+   @ add     r2, r2, #0x92
+   @ msr     spsr, r2
+   @ mov     lr, pc
+   @ movs    pc, lr
 
-    ldr     sp, =0xa3f00000     @set irq_stack to 0xa3f00000
+   @ ldr     sp, =0xa3f00000     @set irq_stack to 0xa3f00000
 
     mrs     r2, cpsr            @switch to user_mode
     bic     r2, r2, #0xff

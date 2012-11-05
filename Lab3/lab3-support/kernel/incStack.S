@@ -1,0 +1,19 @@
+@ setup.S: setting up stack and calling program
+@
+@ Author: Brandon Lee <bfl>
+@         Christopher Palmer <ctpalmer>
+@         Jongyoon Han <jongyoo1>
+@         Lawrence Tsang <ltsang>
+@
+@ Date:   Oct 21, 2012
+@
+@ Switch the cpsr to USER mode and then set the user stack to start at
+@ 0xA3000000 and then, jump to the user application at 0xA0000000
+
+    .file       "incStack.S"
+    .text
+
+    .global     incStack
+incStack:
+    add         sp, sp, #4
+    mov         pc, lr

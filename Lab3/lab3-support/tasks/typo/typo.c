@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 	char inputString[50];
         /*char dur[50];
         int length; */
-        //while (1) {
+        while (1) {
 		printf("> ");
 		start = time();
 		bytes_read = read(STDIN_FILENO, inputString, 50);
@@ -35,6 +35,6 @@ int main(int argc, char** argv)
                 
                 printf("time taken = %lu.%lus\n", sec, tenthsec);
 		
-	//}
-	return (int)(end-start);
+	}
+	return (-255);   // should never reach here
 }

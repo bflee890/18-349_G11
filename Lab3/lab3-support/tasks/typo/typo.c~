@@ -33,7 +33,7 @@ int main(int argc, char** argv)
                 sec = total/1000;
 
                 
-                printf("time taken = %lu.%lu\n", sec, tenthsec);
+                printf("time taken = %lu.%lus\n", sec, tenthsec);
 		
 	//}
 	return (int)(end-start);

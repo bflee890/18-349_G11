@@ -6,5 +6,6 @@ int setup(int argc, char *argv[]);
 void irq_stack();
 void s_handler();
 void i_handler();
+void incStack();
 
 #endif

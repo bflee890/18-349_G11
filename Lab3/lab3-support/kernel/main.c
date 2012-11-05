@@ -98,6 +98,7 @@ int kmain(int argc, char** argv, uint32_t table)
 
     /* Call function at 0xA0000000 */
     d = setup(argc, argv);
+    incStack();
 
     reg_clear(INT_ICMR_ADDR, 0x04000000); //clear ICMR bit
     reg_clear(OSTMR_OIER_ADDR, OSTMR_OIER_E0); //clear OIER bit
