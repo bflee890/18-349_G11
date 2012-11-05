@@ -17,12 +17,13 @@
 int main(int argc, char** argv)
 {
   int i;
-  char glyphArray[] = "|/-\\\b";
+  const char glyphArray[] = "|/-\\";
+  const char delete[] = "\b \b";
   while (1) {
     for (i = 0; i < 4; i++) {
-      write(1, &glyphArray[i], 1);
+      write(STDOUT_FILENO, glyphArray + i, 1);
       sleep(200);
-      write(1, &glyphArray[4], 1);
+      write(STDOUT_FILENO, delete, 3);
     }
   }
   return 0;
