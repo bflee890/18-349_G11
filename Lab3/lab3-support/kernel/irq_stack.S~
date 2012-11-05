@@ -18,7 +18,7 @@ irq_stack:
         msr     spsr, r3
         mov     lr, pc
         movs    pc, lr
-        ldr 	sp, =0xa3f00000
+        ldr 	sp, =0xa1000000
         	
         msr     spsr, r1           @ restore cpsr
         mov     lr, pc
