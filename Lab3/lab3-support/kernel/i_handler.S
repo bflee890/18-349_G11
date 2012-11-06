@@ -16,6 +16,11 @@
 i_handler:
         sub     sp, sp, #4
         stmfd   sp!, {r0-r12, lr}
+
+	@mrs	r2, cpsr
+	@bic	r2, r2, #0x80
+	@msr	cpsr, r2
+
         mrs     r2, spsr
         str     r2, [sp, #14*4]
         bl      c_irq_handler
@@ -23,5 +28,5 @@ i_handler:
         msr     spsr, r2
         ldmfd   sp!, {r0-r12, lr}
         add     sp, sp, #4
-        movs	pc, lr
+        subs	pc, lr, #4
 

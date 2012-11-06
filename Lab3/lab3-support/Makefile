@@ -13,7 +13,7 @@ MAKEFLAGS += -rR
 # The packages are all phony targets.  They produce files in the bin directory.
 # Make sure there are no name clashes.  Add new ones here if you make your own
 # tests (which I recommend you do).
-PACKAGES = hello exit twister splat typo rot13
+PACKAGES = hello rot13 splat typo #exit twister splat typo rot13
 
 .PHONY: all package clean clobber $(PACKAGES)
 all: package kernel
@@ -52,7 +52,7 @@ CWARNINGS = -Werror $(CWARNINGS_SAFE)
 CWARNINGS1 = $(CWARNINGS_SAFE) $(CWARNINGS_NOISY)
 
 KCFLAGS = -O3 -ffreestanding -ffixed-r8 -nostdinc $(CWARNINGS)
-TCFLAGS = -O3 -ffreestanding -nostdinc $(CWARNINGS)
+TCFLAGS = -O3 -ffreestanding -ffixed-r8 -nostdinc $(CWARNINGS)
 ASFLAGS = -nostdinc -Wall -Wextra -Werror -DASSEMBLER
 KLDFLAGS = -nostdlib -N --fatal-warnings --warn-common -Ttext $(KLOAD_ADDR)
 TLDFLAGS = -nostdlib -N --fatal-warnings --warn-common -Ttext $(TLOAD_ADDR)

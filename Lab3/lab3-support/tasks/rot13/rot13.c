@@ -14,8 +14,8 @@
  * syscall is negative, it immediately exits with the exit status of 1.
  */
 
-#include <stdlib.h>
-#include <unistd.h>
+#include "stdlib.h"
+#include "unistd.h"
 #include "../libc/include/bits/fileno.h" 
  
 int main(int argc, char *argv[]) {
@@ -24,6 +24,8 @@ int main(int argc, char *argv[]) {
     char output [256];
     int bytes_read;
     int i;
+
+    //sleep(1000);
     
     for(i = 1; i < argc; i++)
     {

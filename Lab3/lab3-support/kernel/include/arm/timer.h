@@ -36,9 +36,15 @@
 
 #define OSTMR_FREQ            3686400      /* Oscillator frequency in hz */
 
+#define TICKS_FROM_MILLIS(x)  (OSTMR_FREQ/1000*x)
+#define MILLIS_FROM_TICKS(x)  (x/OSTMR_FREQ*1000)
+
 #ifndef ASSEMBLER
 
 /* Add your C code here.  Put your group name at the top! */
+void incrTimer();
+void initializeTimer();
+uint32_t get_clock();
 
 #endif /* ASSEMBLER */
 

@@ -9,22 +9,28 @@
  *
  * Links to libc.
  */
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <bits/fileno.h>
 
 int main(int argc, char** argv)
 {
-	struct timeval start, end;
+	unsigned long start, end, total, sec, tenthsec;
+	int bytes_read;
 	char inputString[50];
-	double mtime, secs, usecs;
-	while (1) {
-		printf("> ");
-		gettimeofday(&start, NULL);
-		fgets(inputString, 50, stdin);
-		printf("%s", inputString);
-		gettimeofday(&end, NULL);
-		secs  = end.tv_sec  - start.tv_sec;
-		usecs = end.tv_usec - start.tv_usec;
-		mtime = (secs + usecs/1000000.0);
-		printf("%0.1f\n", mtime);
-	}
+
+	printf("> ");
+	start = time();
+	bytes_read = read(STDIN_FILENO, inputString, 50);
+	write(STDOUT_FILENO, inputString, bytes_read);
+	end = time();
+
+	total = end-start;
+	sec = total/1000;
+	tenthsec = (total % 1000)/100;
+
+	printf("time taken = %lu.%lus\n", sec, tenthsec);
+	
 	return 0;
 }

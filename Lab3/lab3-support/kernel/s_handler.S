@@ -16,12 +16,25 @@
 s_handler:
         sub     sp, sp, #4
         stmfd   sp!, {r0-r12, lr}
+
+	ldr	r8, [sp, #16*4]
+
+	mrs     r2, cpsr
+        bic     r2, r2, #0x80
+        msr     cpsr, r2
+
         mrs     r2, spsr
         str     r2, [sp, #14*4]
         mov     r1, sp
         ldr     r0, [lr, #-4]
         bic     r0, r0, #0xff000000
+
         bl      c_swi_handler
+
+	@mrs	r2, cpsr
+	@orr	r2, r2, #0x80
+	@msr	cpsr, r2
+
         ldr     r2, [sp, #14*4]
         msr     spsr, r2
         add     sp, sp, #4

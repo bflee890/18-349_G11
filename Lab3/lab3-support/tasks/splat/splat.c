@@ -9,17 +9,27 @@
  *
  * Links to libc.
  */
+#include "stdlib.h"
+#include "unistd.h"
+#include <bits/fileno.h>
+#include <bits/types.h>
 
 int main(int argc, char** argv)
 {
-	int i;
-	char glyphArray[] = "|/-\\";
-	while (true) {
-		for (i = 0; i < 4; i++) {
-			putchar(glyphArray[i]);
-			sleep(200);
-			putchar('\b');
-		}
+    int i;
+    const char glyphArray[] = "|/-\\";
+    const char delete[] = "\b \b";
+    while (1) {
+	for (i = 0; i < 4; i++) {
+	    write(STDOUT_FILENO, glyphArray + i, 1);
+	    sleep(20);
+	    write(STDOUT_FILENO, delete, 3);
 	}
-	return 0;
+    }
+	/*for (j = 0; j < 4; j++) {
+            write(STDOUT_FILENO, glyphArray + j, 1);
+            sleep(20);
+            write(STDOUT_FILENO, delete, 3);
+        }*/
+    return 0;
 }
