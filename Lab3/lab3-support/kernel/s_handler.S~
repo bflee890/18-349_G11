@@ -16,21 +16,12 @@
 s_handler:
         sub     sp, sp, #4
         stmfd   sp!, {r0-r12, lr}
-<<<<<<< HEAD
-
-	ldr	r8, [sp, #16*4]
-
-	mrs     r2, cpsr
-        bic     r2, r2, #0x80
-        msr     cpsr, r2
-=======
         
         ldr     r8, [sp, #16*4] 
 
         mrs 	r2,cpsr		 @ enable interrupt	
         bic 	r2, #0x80
 	msr     cpsr,r2
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
 
         mrs     r2, spsr
         str     r2, [sp, #14*4]
@@ -40,13 +31,6 @@ s_handler:
 
         bl      c_swi_handler
 
-<<<<<<< HEAD
-	@mrs	r2, cpsr
-	@orr	r2, r2, #0x80
-	@msr	cpsr, r2
-
-=======
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
         ldr     r2, [sp, #14*4]
         msr     spsr, r2
         add     sp, sp, #4

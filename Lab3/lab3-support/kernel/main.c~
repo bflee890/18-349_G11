@@ -38,22 +38,16 @@ int kmain(int argc, char** argv, uint32_t table)
     unsigned int SWI_Loc = 0x08;
     unsigned int IRQ_Loc = 0x18;
     unsigned int ldrpc = 0xE51FF000;
-<<<<<<< HEAD
-    unsigned int checkAddr, immd12, SWI_addr, origSwi1, origSwi2, IRQ_addr;
-    unsigned int origIrq1, origIrq2;
-    uint32_t next_time;
-=======
     unsigned int  SWI_addr, IRQ_addr, immd12, checkAddr;
     uint32_t next_time;
     two_instrs SWI_origInstr, IRQ_origInstr;
 
  //   SWI_addr = vecHandlerAddr((unsigned int) SWI_Loc, ldrpc);
  //   IRQ_addr = vecHandlerAddr((unsigned int) IRQ_Loc, ldrpc);
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
 
     /* Get the instruction at the SWI location and compare it to the
      * instruction "ldr pc, [pc, #immd12]" */
-    checkAddr = *((unsigned int *)(SWI_Loc)) - ldrpc;
+    checkAddr = ((unsigned int)(*SWI_Loc)) - ldrpc;
     if((checkAddr>>12) != 0x800 && (checkAddr>>12) != 0)
         return 0xbadc0de;
    //  Find the address that the ldr pc wants to go to 
@@ -68,7 +62,7 @@ int kmain(int argc, char** argv, uint32_t table)
 
     // Get the instruction at the IRQ location and compare it to the
     // * instruction "ldr pc, [pc, #immd12]" 
-    checkAddr = *((unsigned int *)(IRQ_Loc)) - ldrpc;
+    checkAddr = ((unsigned int)(*IRQ_Loc)) - ldrpc;
     if((checkAddr>>12) != 0x800 && (checkAddr>>12) != 0)
         return 0xbadc0de;
     // Find the address that the ldr pc wants to go to 
@@ -96,23 +90,6 @@ int kmain(int argc, char** argv, uint32_t table)
     *(int *)(SWI_addr + 0x4) = (int)&s_handler;
     // Need to modify the IRQ address to point towards our handler
     *(int *)IRQ_addr = 0xE51FF004;
-<<<<<<< HEAD
-    *(int *)(IRQ_addr + 0x4) = (int)&i_handler;
-
-    irq_stack();
-    initializeTimer();
-    //reg_write(OSTMR_OSCR_ADDR, 0);
-    //cur_time = reg_read(OSTMR_OSCR_ADDR);
-    //next_time = cur_time + TICKS_FROM_MILLIS(10);
-    //printf("10mills_ticks: %x\n", TICKS_FROM_MILLIS(10));
-    //printf("cur_time: %x\n", cur_time);
-    //printf("next_time: %x\n", next_time);
-    next_time = TICKS_FROM_MILLIS(1);
-    reg_write(OSTMR_OSMR_ADDR(0), next_time); //set the next time interrupt will occur.
-    //reg_write(OSTMR_OSCR_ADDR, 0);
-    reg_set(OSTMR_OIER_ADDR, OSTMR_OIER_E0); //set the corresponding OIER bit
-    reg_write(OSTMR_OSCR_ADDR, 0x0);
-=======
     *(int *)(IRQ_addr + 0x4) = (int)&i_handler; */
 
     // setup irq stack
@@ -124,7 +101,6 @@ int kmain(int argc, char** argv, uint32_t table)
     reg_write(OSTMR_OSMR_ADDR(0), next_time);
     reg_set(OSTMR_OIER_ADDR, OSTMR_OIER_E0); // allow OSMR0 to intterrupt
     reg_write(OSTMR_OSCR_ADDR, 0x0); // clear the current timer
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
     reg_write(INT_ICMR_ADDR, 0x04000000); //set the corresponding ICMR bit
 
     /* Call function at 0xA0000000 */
@@ -133,10 +109,6 @@ int kmain(int argc, char** argv, uint32_t table)
 
     reg_clear(INT_ICMR_ADDR, 0x04000000); //clear ICMR bit
     reg_clear(OSTMR_OIER_ADDR, OSTMR_OIER_E0); //clear OIER bit
-<<<<<<< HEAD
-    //reg_write(OSTMR_OSMR_ADDR(0), 0x00000000); //clear OSMR(0) register   
-=======
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
 
  //   restoreHandler(SWI_addr, &SWI_origInstr);
  //   restoreHandler(IRQ_addr, &IRQ_origInstr);

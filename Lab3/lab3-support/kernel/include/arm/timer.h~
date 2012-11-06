@@ -34,10 +34,7 @@
 #define OSTMR_OIER_E2         0x00000004   /* Enable match 2 */
 #define OSTMR_OIER_E3         0x00000008   /* Enable match 3 */
 
-#define OSTMR_FREQ            3250000      /* Oscillator frequency in hz */
-
-#define TICKS_FROM_MILLIS(x)  (OSTMR_FREQ/1000*x)
-#define MILLIS_FROM_TICKS(x)  (x/OSTMR_FREQ*1000)
+#define OSTMR_FREQ            3686400      /* Oscillator frequency in hz */
 
 #ifndef ASSEMBLER
 
@@ -50,18 +47,12 @@
 
 
 /* Add your C code here.  Put your group name at the top! */
-<<<<<<< HEAD
-void incrTimer();
-void initializeTimer();
-uint32_t get_clock();
-=======
 unsigned long  get_oscr(void);
 volatile int * wait(unsigned long millis);
 
 void os_timer_interrupt_handler(void); 
 void incrTimer(void);
 void initializeTimer(void);
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
 
 unsigned int get_clock();
 volatile unsigned int * get_vclock();
