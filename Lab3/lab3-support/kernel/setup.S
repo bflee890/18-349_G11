@@ -17,9 +17,9 @@
 setup:
     stmfd   sp!, {r8}           @ push uboot r8 onto stack
 
-    stmfd   sp!, {lr}           @push lr into svc_stack
-   @ mrs     r2, cpsr            @switch to irq_mode
-   @ bic     r2, r2, #0xff
+    stmfd   sp!, {lr}           @ push lr into svc_stack
+   @ mrs     r2, cpsr           @ switch to irq_mode
+   @ bic     r2, r2, #0xff      @ now handled in main
    @ add     r2, r2, #0x92
    @ msr     spsr, r2
    @ mov     lr, pc
@@ -27,14 +27,14 @@ setup:
 
    @ ldr     sp, =0xa3f00000     @set irq_stack to 0xa3f00000
 
-    mrs     r2, cpsr            @switch to user_mode
-    bic     r2, r2, #0xff
-    add     r2, r2, #0x10
-    msr     spsr, r2
+    mrs     r3, cpsr            @switch to user_mode
+    bic     r3, r3, #0xff
+    add     r3, r3, #0x10
+    msr     spsr, r3
     mov     lr, pc
     movs    pc, lr
 
-    ldr     sp, =0xa3000000     @set user_stack to 0xa3000000
+    mov     sp, r2     @set user_stack to to sp 
     stmfd   sp!, {r0, r1}       @push argc and argv into user_stack
     ldr     pc, =0xa0000000     @jump to user_application
 

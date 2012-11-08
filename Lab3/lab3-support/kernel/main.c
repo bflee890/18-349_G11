@@ -24,6 +24,7 @@
 #include <arm/reg.h>
 
 #include "kernel.h"
+#define NULL 	0
 uint32_t global_data;
 
 int kmain(int argc, char** argv, uint32_t table)
@@ -97,7 +98,23 @@ int kmain(int argc, char** argv, uint32_t table)
     reg_write(INT_ICMR_ADDR, 0x04000000); //set the corresponding ICMR bit
 
     /* Call function at 0xA0000000 */
-    d = setup(argc, argv);
+    // user stack starts at 0xa3000000 
+    // push strings from argv onto stack and increment stack pointers
+    char** u_argv =  (char**)0xa3000000;
+    int u_argc = argc;
+    char* u_argv_end = (char*)(u_argv + sizeof(char*)*u_argc);
+    int i,j;
+    for (i = 0; i < argc; i++) {
+        u_argv[i] = (char*)u_argv_end;
+        for (j = 0; argv[i][j]!= NULL; j++) {
+             *u_argv_end = argv[i][j];
+             u_argv_end++;
+        }
+        *u_argv_end = NULL;
+        u_argv_end++;
+    }
+    unsigned int * sp = (unsigned int*)u_argv_end;
+    d = setup(u_argc, u_argv,sp);
     incStack();
 
     reg_clear(INT_ICMR_ADDR, 0x04000000); //clear ICMR bit
