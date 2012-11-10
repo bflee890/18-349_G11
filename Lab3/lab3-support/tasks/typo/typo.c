@@ -20,26 +20,6 @@
 #include "../libc/include/bits/fileno.h" 
 
 int main(int argc, char** argv)
-<<<<<<< HEAD
-{
-	unsigned long start, end, total, sec, tenthsec;
-	int bytes_read;
-	char inputString[50];
-
-	printf("> ");
-	start = time();
-	bytes_read = read(STDIN_FILENO, inputString, 50);
-	write(STDOUT_FILENO, inputString, bytes_read);
-	end = time();
-
-	total = end-start;
-	sec = total/1000;
-	tenthsec = (total % 1000)/100;
-
-	printf("time taken = %lu.%lus\n", sec, tenthsec);
-	
-	return 0;
-=======
 {	
 	unsigned long start, end, total, sec, tenthsec;
         int bytes_read;
@@ -61,5 +41,4 @@ int main(int argc, char** argv)
 		
 	}
 	return (-255);   // should never reach here
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
 }

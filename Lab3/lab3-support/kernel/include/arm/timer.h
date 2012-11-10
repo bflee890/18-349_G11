@@ -36,32 +36,14 @@
 
 #define OSTMR_FREQ            3250000      /* Oscillator frequency in hz */
 
-#define TICKS_FROM_MILLIS(x)  (OSTMR_FREQ/1000*x)
-#define MILLIS_FROM_TICKS(x)  (x/OSTMR_FREQ*1000)
-
 #ifndef ASSEMBLER
 
-#define PENDING 	      1
-#define RECEIVED	      0
-#define TICKS_FROM_MILLIS(x) (x*OSTMR_FREQ/1000)
-#define MILLIS_FROM_TICKS(x) (x*1000/OSTMR_FREQ)
-#define MIN_OFFSET            100
-#define CLEAR                 0
-
+#define TICKS_FROM_10MILLIS(x) (OSTMR_FREQ/100*x)
+//#define 10MILLIS_FROM_TICKS(x) (x*1000/OSTMR_FREQ)
 
 /* Add your C code here.  Put your group name at the top! */
-<<<<<<< HEAD
-void incrTimer();
-void initializeTimer();
-uint32_t get_clock();
-=======
-unsigned long  get_oscr(void);
-volatile int * wait(unsigned long millis);
-
-void os_timer_interrupt_handler(void); 
 void incrTimer(void);
 void initializeTimer(void);
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
 
 unsigned int get_clock();
 volatile unsigned int * get_vclock();

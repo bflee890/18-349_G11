@@ -38,18 +38,12 @@ int kmain(int argc, char** argv, uint32_t table)
     unsigned int SWI_Loc = 0x08;
     unsigned int IRQ_Loc = 0x18;
     unsigned int ldrpc = 0xE51FF000;
-<<<<<<< HEAD
-    unsigned int checkAddr, immd12, SWI_addr, origSwi1, origSwi2, IRQ_addr;
-    unsigned int origIrq1, origIrq2;
-    uint32_t next_time;
-=======
     unsigned int  SWI_addr, IRQ_addr, immd12, checkAddr;
     uint32_t next_time;
     two_instrs SWI_origInstr, IRQ_origInstr;
 
  //   SWI_addr = vecHandlerAddr((unsigned int) SWI_Loc, ldrpc);
  //   IRQ_addr = vecHandlerAddr((unsigned int) IRQ_Loc, ldrpc);
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
 
     /* Get the instruction at the SWI location and compare it to the
      * instruction "ldr pc, [pc, #immd12]" */
@@ -116,15 +110,14 @@ int kmain(int argc, char** argv, uint32_t table)
     *(int *)(IRQ_addr + 0x4) = (int)&i_handler; */
 
     // setup irq stack
-    irq_stack();
+    //irq_stack();
     initializeTimer(); 
     /* Begin the interrupt cycle to increment our own timer */
     //cur_time = reg_read(OSTMR_OSCR_ADDR), setting to 0 so should be ;
-    next_time = TICKS_FROM_MILLIS(1); // notes next interrupt time
+    next_time = TICKS_FROM_10MILLIS(1); // notes next interrupt time
     reg_write(OSTMR_OSMR_ADDR(0), next_time);
     reg_set(OSTMR_OIER_ADDR, OSTMR_OIER_E0); // allow OSMR0 to intterrupt
     reg_write(OSTMR_OSCR_ADDR, 0x0); // clear the current timer
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
     reg_write(INT_ICMR_ADDR, 0x04000000); //set the corresponding ICMR bit
 
     /* Call function at 0xA0000000 */
@@ -133,10 +126,6 @@ int kmain(int argc, char** argv, uint32_t table)
 
     reg_clear(INT_ICMR_ADDR, 0x04000000); //clear ICMR bit
     reg_clear(OSTMR_OIER_ADDR, OSTMR_OIER_E0); //clear OIER bit
-<<<<<<< HEAD
-    //reg_write(OSTMR_OSMR_ADDR(0), 0x00000000); //clear OSMR(0) register   
-=======
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
 
  //   restoreHandler(SWI_addr, &SWI_origInstr);
  //   restoreHandler(IRQ_addr, &IRQ_origInstr);

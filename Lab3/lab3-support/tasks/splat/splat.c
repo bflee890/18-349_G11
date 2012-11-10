@@ -20,24 +20,6 @@
 
 int main(int argc, char** argv)
 {
-<<<<<<< HEAD
-    int i;
-    const char glyphArray[] = "|/-\\";
-    const char delete[] = "\b \b";
-    while (1) {
-	for (i = 0; i < 4; i++) {
-	    write(STDOUT_FILENO, glyphArray + i, 1);
-	    sleep(20);
-	    write(STDOUT_FILENO, delete, 3);
-	}
-    }
-	/*for (j = 0; j < 4; j++) {
-            write(STDOUT_FILENO, glyphArray + j, 1);
-            sleep(20);
-            write(STDOUT_FILENO, delete, 3);
-        }*/
-    return 0;
-=======
   int i;
   const char glyphArray[] = "|/-\\";
   const char delete[] = "\b \b";
@@ -49,7 +31,6 @@ int main(int argc, char** argv)
     }
   }
   return 0;
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
 }
 
 

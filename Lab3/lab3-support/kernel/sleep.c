@@ -2,7 +2,7 @@
 
 void sleep(unsigned long millis)
 {
-<<<<<<< HEAD
+/*<<<<<<< HEAD
     unsigned long cur_time = get_clock();
     unsigned long next_time = cur_time + millis;
     //uint32_t cur_time = reg_read(OSTMR_OSCR_ADDR);
@@ -18,7 +18,7 @@ void sleep(unsigned long millis)
 	if(cur_time >= next_time)
 	    break;
     }
-=======
+=======*/
 //    uint32_t cur_time = reg_read(OSTMR_OSCR_ADDR);
 //    uint32_t next_time = cur_time + (uint32_t)millis;
 //
@@ -32,5 +32,5 @@ void sleep(unsigned long millis)
     unsigned int end_time = get_clock() + (unsigned int) millis;
     volatile unsigned int * loop =get_vclock(); 
     while (*loop < end_time){}
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
+//>>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
 }

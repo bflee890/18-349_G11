@@ -16,29 +16,11 @@
 i_handler:
         sub     sp, sp, #4
         stmfd   sp!, {r0-r12, lr}
-
-	@mrs	r2, cpsr
-	@bic	r2, r2, #0x80
-	@msr	cpsr, r2
-
         mrs     r2, spsr
         str     r2, [sp, #14*4]
-  @      mrs 	r2,cpsr
-   @     bic 	r2, #0x80
-	@msr     cpsr,r2
-
         bl      c_irq_handler
-
- @       mrs 	r2,cpsr
-  @      orr 	r2, #0x80
-@	msr     cpsr,r2
         ldr     r2, [sp, #14*4]
         msr     spsr, r2
         ldmfd   sp!, {r0-r12, lr}
         add     sp, sp, #4
-<<<<<<< HEAD
-        subs	pc, lr, #4
-
-=======
         subs    pc, lr, #4
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
