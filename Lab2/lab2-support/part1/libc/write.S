@@ -12,6 +12,7 @@
 @ absolute value of the error number, and return -1.  Otherwise return 0
 
 #include <bits/swi.h>
+#inclue "errno.h"
 
 
         .file   "write.S"
@@ -23,8 +24,8 @@ write:
         swi     WRITE_SWI		@ Write
         cmp     r0, #0			@ Check for errors
         bge     return
-errno:
-        ldr     r1, =errno	@ Get address of global errno
+globerr:
+        ldr     r1, =errno	    @ Get address of global errno
         mvn     r0, r0			@ Setting errno to -r0
         add     r0, r0, #1
         str     r0, [r1]

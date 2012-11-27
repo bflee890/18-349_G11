@@ -24,11 +24,9 @@
 #include <arm/reg.h>
 
 #include "kernel.h"
-<<<<<<< HEAD
-#define NULL 	0
-=======
+#define NULL 0
 #include "exception_wiring.h"
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
+
 uint32_t global_data;
 
 int kmain(int argc, char** argv, uint32_t table)
@@ -44,7 +42,8 @@ int kmain(int argc, char** argv, uint32_t table)
     unsigned int ldrpc = 0xE51FF000;
     unsigned int  SWI_addr, IRQ_addr, immd12, checkAddr;
     uint32_t next_time;
-    two_instrs SWI_origInstr, IRQ_origInstr;
+    unsigned int origSwi1, origSwi2, origIrq1, origIrq2;
+ //   two_instrs SWI_origInstr, IRQ_origInstr;
 
  //   SWI_addr = vecHandlerAddr((unsigned int) SWI_Loc, ldrpc);
  //   IRQ_addr = vecHandlerAddr((unsigned int) IRQ_Loc, ldrpc);
@@ -79,21 +78,22 @@ int kmain(int argc, char** argv, uint32_t table)
 	IRQ_addr = *(int *) ((int) IRQ_Loc - immd12 + 0x8);
     }
       
-    wireHandler(SWI_addr, (unsigned int *)s_handler, &SWI_origInstr);
-    wireHandler(IRQ_addr, (unsigned int *)i_handler, &IRQ_origInstr);
+//    wireHandler(SWI_addr, (unsigned int *)s_handler, &SWI_origInstr);
+//    wireHandler(IRQ_addr, (unsigned int *)i_handler, &IRQ_origInstr);
 
-    /* Save original addresses that were originally at SWI location 
+    /* Save original addresses that were originally at SWI location */
     origSwi1 = *(int *)SWI_addr;
     origSwi2 = *(int *)(SWI_addr + 0x4);
     origIrq1 = *(int *)IRQ_addr;
     origIrq2 = *(int *)(IRQ_addr + 0x4);
     
 
-     Modify the U-boot SWI Handler 
+    // Modify the U-boot SWI Handler 
     *(int *)SWI_addr = 0xE51FF004;
     *(int *)(SWI_addr + 0x4) = (int)&s_handler;
     // Need to modify the IRQ address to point towards our handler
     *(int *)IRQ_addr = 0xE51FF004;
+<<<<<<< HEAD
 <<<<<<< HEAD
     *(int *)(IRQ_addr + 0x4) = (int)&i_handler;
 
@@ -112,6 +112,9 @@ int kmain(int argc, char** argv, uint32_t table)
     reg_write(OSTMR_OSCR_ADDR, 0x0);
 =======
     *(int *)(IRQ_addr + 0x4) = (int)&i_handler; */
+=======
+    *(int *)(IRQ_addr + 0x4) = (int)&i_handler; 
+>>>>>>> 612cb3ae1b172303b192dae381bec8b431465216
 
     // setup irq stack
     //irq_stack();
@@ -126,23 +129,13 @@ int kmain(int argc, char** argv, uint32_t table)
 
     /* Call function at 0xA0000000 */
     // user stack starts at 0xa3000000 
-    // push strings from argv onto stack and increment stack pointers
-    char** u_argv =  (char**)0xa3000000;
-    int u_argc = argc;
-    char* u_argv_end = (char*)(u_argv + sizeof(char*)*u_argc);
-    int i,j;
-    for (i = 0; i < argc; i++) {
-        u_argv[i] = (char*)u_argv_end;
-        for (j = 0; argv[i][j]!= NULL; j++) {
-             *u_argv_end = argv[i][j];
-             u_argv_end++;
-        }
-        *u_argv_end = NULL;
-        u_argv_end++;
+    // push strings from argv onto stack and increment stack 
+    char** u_argv =  (char**)(0xa3000000- sizeof(char*)*argc);
+    int i ;
+    for (i = argc-1; i>=0; i--) {
+        u_argv[i] = argv[i];
     }
-    unsigned int * sp = (unsigned int*)u_argv_end;
-    d = setup(u_argc, u_argv,sp);
-    incStack();
+    d = setup(argc, u_argv,(unsigned int *)u_argv);
 
     reg_clear(INT_ICMR_ADDR, 0x04000000); //clear ICMR bit
     reg_clear(OSTMR_OIER_ADDR, OSTMR_OIER_E0); //clear OIER bit
@@ -151,10 +144,10 @@ int kmain(int argc, char** argv, uint32_t table)
  //   restoreHandler(IRQ_addr, &IRQ_origInstr);
 
     // Return the U-boot SWI Handler back to it's original piece 
-    *(int *)SWI_addr = SWI_origInstr.instr1;
-    *(int *)(SWI_addr + 0x4) = SWI_origInstr.instr2;
-    *(int *)IRQ_addr = IRQ_origInstr.instr1;
-    *(int *)(IRQ_addr + 0x4) = IRQ_origInstr.instr2;
+    *(int *)SWI_addr = origSwi1;
+    *(int *)(SWI_addr + 0x4) = origSwi2;
+    *(int *)IRQ_addr = origIrq1;
+    *(int *)(IRQ_addr + 0x4) = origIrq2;
 
     /* Return the return value of the function at 0xA2000000 */
     return d;

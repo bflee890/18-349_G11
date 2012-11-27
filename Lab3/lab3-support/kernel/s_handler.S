@@ -17,7 +17,8 @@ s_handler:
         sub     sp, sp, #4
         stmfd   sp!, {r0-r12, lr}
         
-        ldr     r8, [sp, #16*4] 
+        ldr     r12, =global_data
+        ldr     r8, [r12] 
 
         mrs 	r2,cpsr		 @ enable interrupt	
         bic 	r2, #0x80

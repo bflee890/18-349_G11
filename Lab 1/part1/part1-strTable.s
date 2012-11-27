@@ -6,35 +6,43 @@
 strTable:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	stmfd	sp!, {r4, r5, r6}
-	mov	r5, r0
-	mov	r4, r2
-	mov	r0, r3
-	mov	r2, #0
-	cmp	r2, r3
-	bge	.L11
+	stmfd	sp!, {r4, r5} 		@ No more storing r6 because it's not used
+	mov	r4, #0			@ Took out move instructions. r0,r1,r2,r3,
+					@ serve as their original arguments.
+					@ r4 iterates through dest, r5 is source point
+					@ r6 is dest point
+	cmp	r3, #0 			@ Replaced comparing r2 to register to immd
+	blt	.L11
 .L9:
-	ldrb	r3, [r1, r2]	@ zero_extendqisi2
-	sub	ip, r3, #23
-	cmp	ip, #22
-	ble	.L13
-.L7:
-	sub	ip, ip, #23
-	cmp	ip, #22
-	bgt	.L7
+    ldrb	r5, [r1, r4]	@ Took out the loop and replaced it with a way that
+    mov		ip, r5		@ compares multiples of 23 and the original char
+    cmp         ip, #138
+    blt         .L10
+.L8:
+    sub         ip, ip, #23
+    cmp         ip, #138
+    bge         .L8
+.L10:
+    cmp		ip, #115	@ and subtracts the largest multiple to find the
+    subge	ip, #115	@ most efficient one
+    cmp		ip, #92 	@ Takes away the branches which take a lot of the
+    subge	ip, #92         @ overhead away, and since there's a small amount
+    cmp		ip, #69         @ of cases, it actually is much more efficient
+	subge	ip, #69
+	cmp	ip, #46
+	subge	ip, #46	
+	cmp	ip, #23
+	subge	ip, #23
 .L13:
-	cmp	ip, r4
-	bgt	.L4
-	ldrb	r3, [r5, ip]	@ zero_extendqisi2
-	ldrb	r6, [r1, r2]	@ zero_extendqisi2
-	cmp	r3, r6
-	strneb	r6, [r5, ip]
+	cmp	ip, r2			@ Took out load and store because it's repetitive
+        strleb  r5, [r0, ip]
 .L4:
-	add	r2, r2, #1
-	cmp	r2, r0
+	add	r4, r4, #1
+	cmp	r4, r3
 	blt	.L9
 .L11:
-	ldmfd	sp!, {r4, r5, r6}
-	mov pc, lr
+	ldmfd	sp!, {r4, r5}
+	mov 	pc, lr
 	.size	strTable, .-strTable
 	.ident	"GCC: (GNU) 3.4.5"
+

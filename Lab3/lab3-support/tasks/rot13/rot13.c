@@ -14,8 +14,14 @@
  * syscall is negative, it immediately exits with the exit status of 1.
  */
 
+<<<<<<< HEAD
 #include "stdlib.h"
 #include "unistd.h"
+=======
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+>>>>>>> 612cb3ae1b172303b192dae381bec8b431465216
 #include "../libc/include/bits/fileno.h" 
  
 int main(int argc, char *argv[]) {
@@ -27,9 +33,9 @@ int main(int argc, char *argv[]) {
 
     //sleep(1000);
     
-    for(i = 1; i < argc; i++)
+    for(i = 0; i < argc; i++)
     {
-                write(STDOUT_FILENO, argv[i], 4);
+                printf("%s\n",argv[i]);
     } //check if arguments are correct.
 
 
