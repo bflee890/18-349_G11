@@ -12,6 +12,7 @@
 @ absolute value of the error number, and return -1.  Otherwise return 0
 
 #include <bits/swi.h>
+#inclue "errno.h"
 
 
         .file   "read.S"
