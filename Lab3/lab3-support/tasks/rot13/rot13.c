@@ -15,6 +15,7 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include "../libc/include/bits/fileno.h" 
  
@@ -25,9 +26,9 @@ int main(int argc, char *argv[]) {
     int bytes_read;
     int i;
     
-    for(i = 1; i < argc; i++)
+    for(i = 0; i < argc; i++)
     {
-                write(STDOUT_FILENO, argv[i], 4);
+                printf("%s\n",argv[i]);
     } //check if arguments are correct.
 
 
