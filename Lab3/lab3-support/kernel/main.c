@@ -26,6 +26,7 @@
 #include "kernel.h"
 #define NULL 0
 #include "exception_wiring.h"
+
 uint32_t global_data;
 
 int kmain(int argc, char** argv, uint32_t table)
