@@ -15,8 +15,8 @@
 
     .global     setup
 setup:
-    stmfd   sp!, {lr}           @push lr into svc_stack
-   @ mrs     r2, cpsr            @switch to irq_mode
+    stmfd   sp!, {lr}           @ push lr into svc_stack
+   @ mrs     r2, cpsr           @ switch to irq_mode
    @ bic     r2, r2, #0xff      @ now handled in main
    @ add     r2, r2, #0x92
    @ msr     spsr, r2
@@ -32,7 +32,7 @@ setup:
     mov     lr, pc
     movs    pc, lr
 
-    mov     sp, r2              @ set user stack to 0xa3000000
+    mov     sp, r2     @set user_stack to to sp 
     stmfd   sp!, {r0, r1}       @push argc and argv into user_stack
     ldr     pc, =0xa0000000     @jump to user_application
 

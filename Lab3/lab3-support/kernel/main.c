@@ -25,6 +25,7 @@
 
 #include "kernel.h"
 #define NULL 0
+#include "exception_wiring.h"
 uint32_t global_data;
 
 int kmain(int argc, char** argv, uint32_t table)
@@ -35,19 +36,23 @@ int kmain(int argc, char** argv, uint32_t table)
 	/* Add your code here */
 
     int d;
-    int *SWI_Loc =(int *) 0x08;
-    int *IRQ_Loc =(int *) 0x18;
+    unsigned int SWI_Loc = 0x08;
+    unsigned int IRQ_Loc = 0x18;
     unsigned int ldrpc = 0xE51FF000;
-    unsigned int checkAddr, immd12, SWI_addr, origSwi1, origSwi2, IRQ_addr;
-    unsigned int origIrq1, origIrq2;
+    unsigned int  SWI_addr, IRQ_addr, immd12, checkAddr;
     uint32_t next_time;
+    unsigned int origSwi1, origSwi2, origIrq1, origIrq2;
+ //   two_instrs SWI_origInstr, IRQ_origInstr;
+
+ //   SWI_addr = vecHandlerAddr((unsigned int) SWI_Loc, ldrpc);
+ //   IRQ_addr = vecHandlerAddr((unsigned int) IRQ_Loc, ldrpc);
 
     /* Get the instruction at the SWI location and compare it to the
      * instruction "ldr pc, [pc, #immd12]" */
-    checkAddr = ((unsigned int)(*SWI_Loc)) - ldrpc;
+    checkAddr = *((unsigned int *)(SWI_Loc)) - ldrpc;
     if((checkAddr>>12) != 0x800 && (checkAddr>>12) != 0)
         return 0xbadc0de;
-    /* Find the address that the ldr pc wants to go to */
+   //  Find the address that the ldr pc wants to go to 
     else if((checkAddr>>12) == 0x800) {
         immd12 = checkAddr & 0xFFF;     // up bit is turned on
         SWI_addr = *(int *) ((int) SWI_Loc + immd12 + 0x8);
@@ -57,12 +62,12 @@ int kmain(int argc, char** argv, uint32_t table)
         SWI_addr = *(int *) ((int) SWI_Loc - immd12 + 0x8);
     }
 
-    /* Get the instruction at the IRQ location and compare it to the
-     * instruction "ldr pc, [pc, #immd12]" */
-    checkAddr = ((unsigned int)(*IRQ_Loc)) - ldrpc;
+    // Get the instruction at the IRQ location and compare it to the
+    // * instruction "ldr pc, [pc, #immd12]" 
+    checkAddr = *((unsigned int *)(IRQ_Loc)) - ldrpc;
     if((checkAddr>>12) != 0x800 && (checkAddr>>12) != 0)
         return 0xbadc0de;
-    /* Find the address that the ldr pc wants to go to */
+    // Find the address that the ldr pc wants to go to 
     else if((checkAddr>>12) == 0x800) {
         immd12 = checkAddr & 0xFFF;     // up bit is turned on
         IRQ_addr = *(int *) ((int) IRQ_Loc + immd12 + 0x8);
@@ -71,6 +76,9 @@ int kmain(int argc, char** argv, uint32_t table)
         immd12 = checkAddr & 0xFFF;     // up bit is turned off
 	IRQ_addr = *(int *) ((int) IRQ_Loc - immd12 + 0x8);
     }
+      
+//    wireHandler(SWI_addr, (unsigned int *)s_handler, &SWI_origInstr);
+//    wireHandler(IRQ_addr, (unsigned int *)i_handler, &IRQ_origInstr);
 
     /* Save original addresses that were originally at SWI location */
     origSwi1 = *(int *)SWI_addr;
@@ -79,12 +87,12 @@ int kmain(int argc, char** argv, uint32_t table)
     origIrq2 = *(int *)(IRQ_addr + 0x4);
     
 
-    /* Modify the U-boot SWI Handler */
+    // Modify the U-boot SWI Handler 
     *(int *)SWI_addr = 0xE51FF004;
     *(int *)(SWI_addr + 0x4) = (int)&s_handler;
     // Need to modify the IRQ address to point towards our handler
     *(int *)IRQ_addr = 0xE51FF004;
-    *(int *)(IRQ_addr + 0x4) = (int)&i_handler;
+    *(int *)(IRQ_addr + 0x4) = (int)&i_handler; 
 
     // setup irq stack
     irq_stack();
@@ -99,7 +107,7 @@ int kmain(int argc, char** argv, uint32_t table)
 
     /* Call function at 0xA0000000 */
     // user stack starts at 0xa3000000 
-    // push strings from argv onto stack and increment stack pointers
+    // push strings from argv onto stack and increment stack 
     char** u_argv =  (char**)(0xa3000000- sizeof(char*)*argc);
     int i ;
     for (i = argc-1; i>=0; i--) {
@@ -110,7 +118,10 @@ int kmain(int argc, char** argv, uint32_t table)
     reg_clear(INT_ICMR_ADDR, 0x04000000); //clear ICMR bit
     reg_clear(OSTMR_OIER_ADDR, OSTMR_OIER_E0); //clear OIER bit
 
-    /* Return the U-boot SWI Handler back to it's original piece */
+ //   restoreHandler(SWI_addr, &SWI_origInstr);
+ //   restoreHandler(IRQ_addr, &IRQ_origInstr);
+
+    // Return the U-boot SWI Handler back to it's original piece 
     *(int *)SWI_addr = origSwi1;
     *(int *)(SWI_addr + 0x4) = origSwi2;
     *(int *)IRQ_addr = origIrq1;
