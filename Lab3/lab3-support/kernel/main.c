@@ -24,11 +24,7 @@
 #include <arm/reg.h>
 
 #include "kernel.h"
-<<<<<<< HEAD
-#define NULL 	0
-=======
-#include "exception_wiring.h"
->>>>>>> f6cb83413f2d2528e8d7baf581da28390840443c
+
 uint32_t global_data;
 
 int kmain(int argc, char** argv, uint32_t table)
