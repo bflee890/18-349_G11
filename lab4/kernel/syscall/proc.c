@@ -24,11 +24,11 @@
 
 int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
-  int i;
+  unsigned int i;
   task_t temp;
   
   // check if number of tasks is within bounds
-  if (num_tasks > 64)
+  if (num_tasks > OS_MAX_TASKS)
   {
     return EINVAL;
   }
@@ -37,7 +37,7 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
     /* STILL NEED TO HANDLE EFAULT */	
 
     // check if given task is schedulable
-    if (task[i]->C > task[i]-> T)
+    if (tasks[i].C > tasks[i].T)
     {
       return ESCHED;
     }
@@ -45,11 +45,11 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
     // use bubble sort to sort array by period
     if (i < num_tasks - 1)
     {
-      if (task[i]->T > task[i+1]->T)
+      if (tasks[i].T > tasks[i+1].T)
       {
-        temp = task[i];
-        task[i] = task[i+1];
-        task[i+1] = temp;
+        temp = tasks[i];
+        tasks[i] = tasks[i+1];
+        tasks[i+1] = temp;
       }
     }
   }

@@ -32,7 +32,7 @@ void c_swi_handler(unsigned swi_num, unsigned *regs)
                     sleep_syscall((unsigned long)regs[0]);
 		    break;
                 default: 
-                    assert(0); 
+                    invalid_syscall(0);
                     break;
         }
 }

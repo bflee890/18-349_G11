@@ -17,6 +17,9 @@
 #include <bits/errno.h>
 #include <arm/psr.h>
 #include <arm/exception.h>
+
+#define null = 0;
+
 #ifdef DEBUG_MUTEX
 #include <exports.h> // temp
 #endif
@@ -32,9 +35,9 @@ void mutex_init()
   {
 		mutex_t *mutex = &(gtMutex[i]);
 		mutex->bAvailable = 1;
-		mutex->pHolding_Tcb = null;
+	//	mutex->pHolding_Tcb = null;
 		mutex->bLock = 0;
-		mutex->pSleep_queue = null;
+	//	mutex->pSleep_queue = null;
 	}
 }
 
@@ -57,8 +60,8 @@ int mutex_lock(int mutex  __attribute__((unused)))
 
 int mutex_unlock(int mutex  __attribute__((unused)))
 {
-	tcb_t* current_tcb = get_cur_tcb();
-	mutex_t *current_mutex = &(gtMutex[mutex]);
+	tcb_t* cur_tcb = get_cur_tcb();
+	mutex_t *cur_mutex = &(gtMutex[mutex]);
 	
   /* check if provided mutex identifier is valid */
   if (mutex > num_mutices)
@@ -72,16 +75,16 @@ int mutex_unlock(int mutex  __attribute__((unused)))
     return EPERM;
   }
   
-	current_mutex->bAvailable = 1;
-	current_mutex->pHolding_Tcb = null;
-	current_mutex->bLock = 0;
+	cur_mutex->bAvailable = 1;
+//	cur_mutex->pHolding_Tcb = null;
+	cur_mutex->bLock = 0;
 	
 	/* add first task in sleep queue to run queue */
-	if (current_mutex->pSleep_queue != null)
-  {
-		runqueue_add(cur_mutex->pSleep_queue, cur_mutex->pSleep_queue->cur_prio);
-		cur_mutex->pSleep_queue = cur_mutex->pSleep_queue->sleep_queue;
-	}
+//	if (cur_mutex->pSleep_queue != null)
+//	{
+//		runqueue_add(cur_mutex->pSleep_queue, cur_mutex->pSleep_queue->cur_prio);
+//		cur_mutex->pSleep_queue = cur_mutex->pSleep_queue->sleep_queue;
+//	}
 
 	
 	return 1; // fix this to return the correct value
