@@ -24,16 +24,75 @@
 /* Read count bytes (or less) from fd into the buffer buf. */
 ssize_t read_syscall(int fd __attribute__((unused)), void *buf __attribute__((unused)), size_t count __attribute__((unused)))
 {
+    unsigned i;
+    char hold;
+    char *Buf = (char *)buf;
 
-  return 1; /* remove this return line after you have added your code here */
-	
+    /* If not reading into STDIN, then return error */
+    if (fd != STDIN_FILENO)
+        return -EBADF;
+
+    /* If buffer is outside of valid address, then return error */
+    unsigned max_addr = (unsigned)buf + (unsigned)count;
+    if ( (max_addr > RAM_END_ADDR) || (max_addr < RAM_START_ADDR) ||
+         ((unsigned) buf > RAM_END_ADDR) || ((unsigned)buf < RAM_START_ADDR) )
+         return -EFAULT;
+
+    for (i=0; i < count; i++) {
+        hold = getc();
+
+        /* If value is EOT char, then return right away */
+        if (hold == 4)
+            return i;
+        /* If value is delete or backspace, delete last char */
+        else if ((hold == 127) || (hold == '\b')) {
+            if(i != 0) {
+                 puts("\b \b");
+                 i-=2;
+                 Buf[i+1] = 0;
+            }
+            else
+                 i -= 1;
+        }
+        /* If newline or carriage return, then output newline and return */
+        else if ((hold == '\r') || (hold == '\n')) {
+            Buf[i] = '\n';
+            putc('\n');
+            return i+1;
+        }
+        /* Otherwise, just echo out character to STD_OUT */
+        else {
+            Buf[i] = hold;
+            putc(hold);
+        }
+    }
+    return count;
 }
 
 /* Write count bytes to fd from the buffer buf. */
 ssize_t write_syscall(int fd  __attribute__((unused)), const void *buf  __attribute__((unused)), size_t count  __attribute__((unused)))
 {
+    unsigned i;
+    char *Buf = (char *)buf;
 
-  return 1; /* remove this return line after you have added your code here */
-	
+    /* If not writing to STDOUT, then return error */
+    if (fd != STDOUT_FILENO)
+        return -EBADF;
+
+    /* If writing to something outside of valid range, then return error */
+    unsigned max_addr = (unsigned)buf + (unsigned)count;
+    if ( (((unsigned)buf > FLASH_END_ADDR) && ((unsigned)buf < RAM_START_ADDR)) ||
+         ((unsigned)buf > RAM_END_ADDR) ||
+         ((max_addr > FLASH_END_ADDR) && (max_addr < RAM_START_ADDR)) ||
+         (max_addr > RAM_END_ADDR) ) {
+         return -EFAULT;
+    }
+
+    /* Print out characters to STDOUT using putc from UBoot API */
+    for(i=0; i<count; i++)
+        putc(Buf[i]);
+
+    /* Return number of characters printed */
+    return count;
 }
 

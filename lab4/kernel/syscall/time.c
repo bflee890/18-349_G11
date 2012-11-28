@@ -15,7 +15,7 @@
 
 unsigned long time_syscall(void)
 {
- return 1; /* remove this line after adding your code here */	
+    return get_clock();
 }
 
 
@@ -28,5 +28,7 @@ unsigned long time_syscall(void)
  */
 void sleep_syscall(unsigned long millis  __attribute__((unused)))
 {
-	
+    unsigned long end_time = get_clock() + millis;
+    volatile unsigned long * loop = get_vclock();
+    while (*loop < end_time){}
 }

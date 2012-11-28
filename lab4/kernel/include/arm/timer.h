@@ -44,6 +44,10 @@ void timer_handler(unsigned int int_num);
 unsigned long get_ticks(void);
 unsigned long get_millis(void);
 
+unsigned long get_clock(void);
+volatile unsigned long * get_vclock(void);
+void incr_timer(void);
+
 #endif /* ASSEMBLER */
 
 #endif /* _TIMER_H_ */
