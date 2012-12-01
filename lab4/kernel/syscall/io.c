@@ -34,8 +34,8 @@ ssize_t read_syscall(int fd __attribute__((unused)), void *buf __attribute__((un
 
     /* If buffer is outside of valid address, then return error */
     unsigned max_addr = (unsigned)buf + (unsigned)count;
-    if ( (max_addr > SDRAM_END) || (max_addr < SDRAM_BEGIN) ||
-         ((unsigned) buf > SDRAM_END) || ((unsigned)buf < SDRAM_BEGIN) )
+    if ( (max_addr > RAM_END_ADDR) || (max_addr < RAM_START_ADDR) ||
+         ((unsigned) buf > RAM_END_ADDR) || ((unsigned)buf < RAM_START_ADDR) )
          return -EFAULT;
 
     for (i=0; i < count; i++) {
@@ -81,10 +81,10 @@ ssize_t write_syscall(int fd  __attribute__((unused)), const void *buf  __attrib
 
     /* If writing to something outside of valid range, then return error */
     unsigned max_addr = (unsigned)buf + (unsigned)count;
-    if ( (((unsigned)buf > ROM_END) && ((unsigned)buf < SDRAM_BEGIN)) ||
-         ((unsigned)buf > SDRAM_END) ||
-         ((max_addr > ROM_END) && (max_addr < SDRAM_BEGIN)) ||
-         (max_addr > SDRAM_END) ) {
+    if ( (((unsigned)buf > FLASH_END_ADDR) && ((unsigned)buf < RAM_START_ADDR)) ||
+         ((unsigned)buf > RAM_END_ADDR) ||
+         ((max_addr > FLASH_END_ADDR) && (max_addr < RAM_START_ADDR)) ||
+         (max_addr > RAM_END_ADDR) ) {
          return -EFAULT;
     }
 
