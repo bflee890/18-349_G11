@@ -1,6 +1,7 @@
 #include <arm/timer.h>
 #include <arm/reg.h>
 #include <types.h>
+#include <arm/interrupt.h>
 
 volatile unsigned long timer;
 
@@ -13,7 +14,14 @@ volatile unsigned long * get_vclock(void) {
 }
 
 void init_timer(void) {
+    uint32_t next_time;
     timer = 0;
+    /* Begin the interrupt cycle to increment our own timer */
+    next_time = (uint32_t)get_ticks(); // notes next interrupt time
+    reg_write(OSTMR_OSMR_ADDR(0), next_time);
+    reg_set(OSTMR_OIER_ADDR, OSTMR_OIER_E0); // allow OSMR0 to interrupt
+    reg_write(OSTMR_OSCR_ADDR, 0x0); // clear the current timer
+    reg_write(INT_ICMR_ADDR, 0x04000000); //set the corresponding ICMR bit
 }
 void incrTimer(void) {
     timer += 1;
@@ -33,9 +41,9 @@ void timer_handler(unsigned int int_numb) {
 }
 
 unsigned long get_ticks(void) {
-    return (OSTMR_FREQ/100*x);
+    return (OSTMR_FREQ/100);
 }
 
 unsigned long get_millis(void) {
-    return (x/OSTMR_FREQ*100);
+    return (OSTMR_FREQ*100);
 }
