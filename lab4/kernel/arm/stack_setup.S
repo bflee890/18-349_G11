@@ -24,12 +24,6 @@ stack_setup:
 
     ldr     sp, =0xa2000000     @set irq_stack to 0xa2000000
 
-    bic     r3, r3, #0xff	@switch to user_mode
-    add     r3, r3, #0x10
-    msr     cpsr, r3
-
-    ldr     sp, =0xa3000000     @set user_stack to 0xa3000000
-
     msr	    cpsr, r2
     ldmfd   sp!, {r2, r3, lr}
     mov     pc, lr
