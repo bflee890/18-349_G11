@@ -40,21 +40,3 @@ void restoreHandler(unsigned int handlerAddr, two_instrs *origInstr)
 	*(unsigned int *) handlerAddr = origInstr->instr1;
 	*(unsigned int *) (handlerAddr + 0x4) = origInstr->instr2;
 }
-
-/*void uboot_hijacker(void)
-{
-	unsigned int SWI_addr, IRQ_addr;
-	two_instrs SWI_instr, IRQ_instr;
-
-	unsigned int *SWI_Loc = (unsigned int *) 0x08;
-	unsigned int *IRQ_Loc = (unsigned int *) 0x18;
-	
-	SWI_addr = HandlerAddr(SWI_Loc);
-	IRQ_addr = HandlerAddr(IRQ_Loc);
-
-	wireHandler(SWI_addr, (unsigned int)&s_handler, &SWI_instr);
-	wireHandler(IRQ_addr, (unsigned int)&i_handler, &IRQ_instr);
-
-	restoreHandler(SWI_addr, &SWI_instr);
-	restoreHandler(IRQ_addr, &IRQ_instr);
-}*/
