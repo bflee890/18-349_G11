@@ -28,26 +28,33 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
   task_t temp;
   
   // check if number of tasks is within bounds
-  if (num_tasks > 64) {
+  if (num_tasks > 64)
+  {
     return EINVAL;
   }
-  for (i = 0; i < num_tasks; i++) {
+  for (i = 0; i < num_tasks; i++)
+  {
     /* STILL NEED TO HANDLE EFAULT */	
 
     // check if given task is schedulable
-    if (task[i]->C > task[i]-> T) {
+    if (task[i]->C > task[i]-> T)
+    {
       return ESCHED;
     }
     
     // use bubble sort to sort array by period
-    if (i < num_tasks - 1) {
-      if (task[i]->T > task[i+1]->T) {
+    if (i < num_tasks - 1)
+    {
+      if (task[i]->T > task[i+1]->T)
+      {
         temp = task[i];
         task[i] = task[i+1];
         task[i+1] = temp;
       }
     }
   }
+
+  // NOW SCHEDULE TASKS
   
   return 1; /* remove this line after adding your code */
 }
