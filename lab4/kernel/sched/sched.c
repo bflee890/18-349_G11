@@ -22,7 +22,7 @@ tcb_t system_tcb[OS_MAX_TASKS]; /*allocate memory for system TCBs */
 
 void sched_init(task_t* main_task  __attribute__((unused)))
 {
-	
+	system_tcb[OS_MAX_TASKS] = malloc(sizeof(tcb_t) * OS_MAX_TASKS);	
 }
 
 /**
@@ -50,6 +50,19 @@ static void __attribute__((unused)) idle(void)
  */
 void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
-	
+    int i = 0;
+    for(i = 0; i < num_tasks; i++)
+    {
+        system_tcb[i].native_prio = i;
+	system_tcb[i].cur_prio = i;
+	system_tcb[i].holds_lock = 0;
+	system_tcb[i].sleep_queue = 0;
+	system_tcb[i].kstack = tasks[i]->stackpos;
+	system_tcb[i].kstack_high = kstack+sizeof;
+	system_tcb[i].context.sp = tasks[i]->stackpos+1;
+	system_tcb[i].context.lr = tasks[i]->lambda;
+	system_tcb[i].kstack[0] = (uint32_t) tasks[i]->data;
+	run_list[i] = system_tcb[i];
+    }
 }
 

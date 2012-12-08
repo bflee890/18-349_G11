@@ -32,7 +32,7 @@ void mutex_init()
 	num_mutices = -1;
 	int i;
 	for (i = 0; i < OS_NUM_MUTEX; i++)
-  {
+  	{
 		mutex_t *mutex = &(gtMutex[i]);
 		mutex->bAvailable = 1;
 	//	mutex->pHolding_Tcb = null;
@@ -45,7 +45,7 @@ int mutex_create(void)
 {
 
 	if (num_mutices > OS_NUM_MUTEX) 
-  {
+  	{
 		/* already at maximum number of mutices */
 		return ENOMEM;
 	}
