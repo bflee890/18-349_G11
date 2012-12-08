@@ -51,7 +51,7 @@ static void __attribute__((unused)) idle(void)
  */
 void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
-    int i;
+    unsigned int i;
     //dispatch_init();
     runqueue_init();
     //add idle task to run_queue
@@ -63,12 +63,16 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 	system_tcb[i].cur_prio = i;
 	system_tcb[i].holds_lock = 0;
 	system_tcb[i].sleep_queue = 0;
-	system_tcb[i].kstack = tasks[i]->stackpos;
-	system_tcb[i].context.sp = tasks[i]->stackpos+1;
+	system_tcb[i].kstack = tasks[i]->stack_pos;
+	system_tcb[i].context.sp = tasks[i]->stack_pos+1;
 	system_tcb[i].context.lr = tasks[i]->lambda;
 	system_tcb[i].kstack[0] = (uint32_t) tasks[i]->data;
-	run_list[i] = system_tcb[i];
-        dispatch_init(system_tcb[i])
+
+	disable_interrupts();
+	runqueue_add(&system_tcb[i], system_tcb[i].native_prio);
+	enable_interrupts();
+
+        dispatch_init(&system_tcb[i]);
         dev_wait(tasks[i]->T);
         disable_interrupts();
         dispatch_nosave();
