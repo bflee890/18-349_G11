@@ -58,7 +58,14 @@ static uint8_t prio_unmap_table[]  __attribute__((unused)) =
  */
 void runqueue_init(void)
 {
-	
+    int i;
+    for (i = 0; i < OS_MAX_TASKS/8; i ++) {
+        run_bits[i] = 0;
+    } 
+    for (i = 0; i < OS_MAX_TASKS; i ++) {
+        run_list[i] = 0;
+    }
+    group_run_bits = 0;
 }
 
 /**
@@ -71,7 +78,22 @@ void runqueue_init(void)
  */
 void runqueue_add(tcb_t* tcb  __attribute__((unused)), uint8_t prio  __attribute__((unused)))
 {
-	
+     int group, group_i,new_prio,i;
+     for (i = 0; i < OS_MAX_TASKS; i++) {
+          new_prio = (prio-i)%OS_MAX_TASKS;
+          if (run_list[new_prio] == 0) {
+	      tcb->cur_prio = new_prio;	
+              tcb->native_prio = prio;
+              group = new_prio/OS_NUM_GROUPS;
+              group_i = new_prio%OS_NUM_GROUPS;
+              group_run_bits = group_run_bits || (1 << group);
+              run_bits[group] = run_bits[group] || (1 << group_i);	
+              run_list[prio] = tcb;
+              break;
+          }
+
+     }  
+
 }
 
 
@@ -84,7 +106,16 @@ void runqueue_add(tcb_t* tcb  __attribute__((unused)), uint8_t prio  __attribute
  */
 tcb_t* runqueue_remove(uint8_t prio  __attribute__((unused)))
 {
-	return (tcb_t *)1; // fix this; dummy return to prevent warning messages	
+    int group,group_i;
+    tcb_t* rem_tcb;
+    group = prio/OS_NUM_GROUPS;
+    group_i = prio%OS_NUM_GROUPS;
+    run_bits[group] = run_bits[group] & ~(1 << group_i);
+    if (run_bits[group] == 0) 
+         group_run_bits = group_run_bits & (~(1 << group));
+    rem_tcb = run_list[prio];
+    run_list[prio] = 0;
+    return rem_tcb; // fix this; dummy return to prevent warning messages	
 }
 
 /**
@@ -93,5 +124,8 @@ tcb_t* runqueue_remove(uint8_t prio  __attribute__((unused)))
  */
 uint8_t highest_prio(void)
 {
-	return 1; // fix this; dummy return to prevent warning messages	
+    int group, group_i; 
+    group = prio_unmap_table[group_run_bits];
+    group_i = prio_unmap_table[run_bits[group]];
+    return group*8 + group_i; 
 }
