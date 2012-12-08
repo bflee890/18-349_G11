@@ -62,17 +62,14 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 	system_tcb[i].holds_lock = 0;
 	system_tcb[i].sleep_queue = 0;
 	system_tcb[i].context.sp = tasks[i]->stack_pos;
-	system_tcb[i].context.lr = tasks[i]->lambda;
-	system_tcb[i].kstack[0] = 0;
+	system_tcb[i].context.lr = &launch_task;
+	system_tcb[i].context.r4 = tasks[i]->lambda;
+	system_tcb[i].context.r5 = tasks[i]->data;
+	system_tcb[i].context.r5 = tasks[i]->stack_pos;
 
 	disable_interrupts();
 	runqueue_add(&system_tcb[i], i);
 	enable_interrupts();
-
-        /*dispatch_init(&system_tcb[i]);
-        disable_interrupts();
-        dispatch_nosave();
-        enable_interrupts();*/
     }
     /* setup registers such that launch_tas() is runnable
      * from launch task @brief Special exit routine from the scheduler that launches a task for the
@@ -83,6 +80,6 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
      * r6 contains the user-mode stack pointer.
      * Upon completion, we should be in user mode.
      */
-    launch_task();
+     dispatch_nosave();
 }
 
