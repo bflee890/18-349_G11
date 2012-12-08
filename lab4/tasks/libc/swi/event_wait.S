@@ -11,4 +11,10 @@
 	.file "event_wait.S"
 
 FUNC(event_wait)
-	@ Add code here.  Put your name at the top.
+        stmfd   sp!, {r1}
+        swi     EVENT_WAIT               @ Write
+
+return:
+        ldmfd   sp!, {r1}
+        mov     pc, lr
+
