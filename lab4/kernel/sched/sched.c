@@ -23,6 +23,7 @@ tcb_t system_tcb[OS_MAX_TASKS]; /*allocate memory for system TCBs */
 void sched_init(task_t* main_task  __attribute__((unused)))
 {
 // not used
+// add idle task to run?
 }
 
 /**
@@ -51,8 +52,9 @@ static void __attribute__((unused)) idle(void)
 void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
     int i;
-    dispatch_init();
+    //dispatch_init();
     runqueue_init();
+    //add idle task to run_queue
     for(i = 0; i < num_tasks; i++)
     {
         // where should we be putting the user stack stuff, or are we just checking to see if it's valid
@@ -66,10 +68,12 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 	system_tcb[i].context.lr = tasks[i]->lambda;
 	system_tcb[i].kstack[0] = (uint32_t) tasks[i]->data;
 	run_list[i] = system_tcb[i];
+        dispatch_init(system_tcb[i])
+        dev_wait(tasks[i]->T);
+        disable_interrupts();
+        dispatch_nosave();
+        enable_interrupts();
     }
-    disable_interrupts();
-    dispatch_nosave();
-    enable_interrupts();
     /* setup registers such that launch_tas() is runnable
      * from launch task @brief Special exit routine from the scheduler that launches a task for the
      * first time.
