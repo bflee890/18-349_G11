@@ -15,7 +15,7 @@
 #include <kernel.h>
 #include <syscall.h>
 #include <sched.h>
-
+#include <sys.h>
 #include <arm/reg.h>
 #include <arm/psr.h>
 #include <arm/exception.h>
@@ -56,9 +56,8 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
 
   allocate_tasks(&tasks, num_tasks);
 
-  // NOW SCHEDULE TASKS
   
-  return 1; /* remove this line after adding your code */
+  return EFAULT; /* remove this line after adding your code */
 }
 
 int event_wait(unsigned int dev  __attribute__((unused)))
