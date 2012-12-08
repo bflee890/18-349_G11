@@ -28,7 +28,8 @@ static __attribute__((unused)) tcb_t* cur_tcb; /* use this if needed */
  */
 void dispatch_init(tcb_t* idle __attribute__((unused)))
 {
-	
+    cur_tcb = idle;
+    cur_tcb->native_prio = IDLE_PRIO;
 }
 
 
@@ -42,42 +43,51 @@ void dispatch_init(tcb_t* idle __attribute__((unused)))
  */
 void dispatch_save(void)
 {
-	
+    tcb_t* hp = runqueue_remove(highest_prio());
+    ctx_switch_full(hp,cur_tcb) ;
+    runqueue_add(cur_tcb,cur_tcb->native_prio);
+    cur_tcb = hp; 
 }
 
 /**
  * @brief Context switch to the highest priority task that is not this task -- 
- * don't save the current task state.
+ * don't save the cur_tcbrent task state.
  *
  * There is always an idle task to switch to.
  */
 void dispatch_nosave(void)
 {
+     // implement this then save
+    tcb_t* hp = runqueue_remove(highest_prio());
+    ctx_switch_half(hp) ;
+    cur_tcb = hp;
 
 }
 
 
 /**
  * @brief Context switch to the highest priority task that is not this task -- 
- * and save the current task but don't mark is runnable.
+ * and save the cur_tcbrent task but don't mark is runnable.
  *
  * There is always an idle task to switch to.
  */
 void dispatch_sleep(void)
 {
-	
+    tcb_t* hp =  runqueue_remove(highest_prio());
+    ctx_switch_full(hp,cur_tcb);
+    cur_tcb = hp;
 }
 
 /**
- * @brief Returns the priority value of the current task.
+ * @brief Returns the priority value of the cur_tcbrent task.
  */
 uint8_t get_cur_prio(void)
 {
-	return cur_tcb.cur_prio;
+	return cur_tcb->cur_prio;
 }
 
 /**
- * @brief Returns the TCB of the current task.
+ * @brief Returns the TCB of the cur_tcbrent task.
  */
 tcb_t* get_cur_tcb(void)
 {
