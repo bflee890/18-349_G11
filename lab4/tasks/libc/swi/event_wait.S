@@ -11,10 +11,6 @@
 	.file "event_wait.S"
 
 FUNC(event_wait)
-        stmfd   sp!, {r1}
         swi     EVENT_WAIT               @ Write
-
-return:
-        ldmfd   sp!, {r1}
         mov     pc, lr
 
