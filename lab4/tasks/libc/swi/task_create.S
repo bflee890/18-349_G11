@@ -11,4 +11,5 @@
 	.file "task_create.S"
 
 FUNC(task_create)
-	@ Add code here.  Put your name at the top.
+	swi     CREATE_SWI
+        mov     pc, lr
