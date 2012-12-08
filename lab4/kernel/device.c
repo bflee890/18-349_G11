@@ -68,6 +68,9 @@ void dev_wait(unsigned int dev __attribute__((unused)))
     sq->sleep_queue = get_cur_tcb();
     sq = sq->sleep_queue;
     sq->sleep_queue = 0;
+    disable_interrupts();
+    dispatch_sleep();
+    enable_interrupts();
 }
 
 
