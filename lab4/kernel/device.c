@@ -62,7 +62,12 @@ void dev_init(void)
  */
 void dev_wait(unsigned int dev __attribute__((unused)))
 {
-
+    tcb_t* sq = devices[dev].sleep_queue;
+    while (sq != 0) 
+        sq = sq->sleep_queue;
+    sq->sleep_queue = get_cur_tcb();
+    sq = sq->sleep_queue;
+    sq->sleep_queue = 0;
 }
 
 
@@ -82,6 +87,11 @@ void dev_update(unsigned long millis __attribute__((unused)))
     for (d = 0; d < NUM_DEVICES; d++) {
         if (devices[d].next_match == millis) {
             devices[d].next_match += dev_freq[d];
+            tcb_t* sq = devices[d].sleep_queue;
+            while(sq != 0) {
+                runqueue_add(sq,sq->native_prio);
+                sq = sq->sleep_queue;
+            }   
         }
     }	    	
 }
