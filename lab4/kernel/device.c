@@ -49,7 +49,7 @@ void dev_init(void)
     int d;
     for (d = 0; d < NUM_DEVICES; d++) {
         devices[d].sleep_queue = 0;
-        devices[d].next_match = dev_freq[d];
+        devices[d].next_match = get_time() + dev_freq[d];
     } 
 }
 
@@ -96,6 +96,9 @@ void dev_update(unsigned long millis __attribute__((unused)))
                 sq = sq->sleep_queue;
             }   
         }
-    }	    	
+    }	    
+    enable_interrupts();
+    dispatch_save();	
+    disable_interrupts();
 }
 

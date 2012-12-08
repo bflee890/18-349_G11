@@ -52,12 +52,10 @@ static void __attribute__((unused)) idle(void)
 void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
     unsigned int i;
-    //dispatch_init();
     runqueue_init();
     //add idle task to run_queue
     for(i = 0; i < num_tasks; i++)
     {
-        // where should we be putting the user stack stuff, or are we just checking to see if it's valid
         system_tcb[i].native_prio = i;
 	system_tcb[i].holds_lock = 0;
 	system_tcb[i].sleep_queue = 0;
@@ -71,15 +69,7 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 	runqueue_add(&system_tcb[i], i);
 	enable_interrupts();
     }
-    /* setup registers such that launch_tas() is runnable
-     * from launch task @brief Special exit routine from the scheduler that launches a task for the
-     * first time.
-     *
-     * r4 contains the user entry point.
-     * r5 contains the single argument to the user function called.
-     * r6 contains the user-mode stack pointer.
-     * Upon completion, we should be in user mode.
-     */
-     dispatch_nosave();
+    disable_interrupts(); 
+    dispatch_nosave();
+    enable_interrupts();
 }
-
