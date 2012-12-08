@@ -58,9 +58,7 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
     for(i = 0; i < num_tasks; i++)
     {
         // where should we be putting the user stack stuff, or are we just checking to see if it's valid
-        //tasks[i]->stackpos = ;
         system_tcb[i].native_prio = i;
-	system_tcb[i].cur_prio = i;
 	system_tcb[i].holds_lock = 0;
 	system_tcb[i].sleep_queue = 0;
 	system_tcb[i].context.sp = tasks[i]->stack_pos;
@@ -68,13 +66,13 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 	system_tcb[i].kstack[0] = 0;
 
 	disable_interrupts();
-	runqueue_add(&system_tcb[i], system_tcb[i].native_prio);
+	runqueue_add(&system_tcb[i], i);
 	enable_interrupts();
 
-        dispatch_init(&system_tcb[i]);
+        /*dispatch_init(&system_tcb[i]);
         disable_interrupts();
         dispatch_nosave();
-        enable_interrupts();
+        enable_interrupts();*/
     }
     /* setup registers such that launch_tas() is runnable
      * from launch task @brief Special exit routine from the scheduler that launches a task for the
