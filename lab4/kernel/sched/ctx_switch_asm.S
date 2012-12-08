@@ -42,9 +42,11 @@ FUNC(launch_task)
 /* add your code to perform a full context switch */
 FUNC(ctx_switch_full)
    stmfd r1,{r4-r11,sp,lr}
-    ldmfd r0,{r4-r11,sp,lr}
-    ldmfd sp!, r0
+   ldmfd r0,{r4-r11,sp,lr}
+   ldmfd sp!, r0
+   mov pc, lr
 /*add your code to perform a half context switch */	
 FUNC(ctx_switch_half)
     ldmfd r0,{r4-r11,sp,lr}
     ldmfd sp!, r0
+    mov pc, lr
