@@ -2,6 +2,7 @@
 #include <arm/interrupt.h>
 #include <arm/timer.h>
 #include <arm/reg.h>
+#include <device.h>
 
 volatile unsigned long timer;
 volatile unsigned long os_next_time;

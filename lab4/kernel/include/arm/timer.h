@@ -47,6 +47,8 @@ unsigned long get_millis(void);
 unsigned long get_clock(void);
 volatile unsigned long * get_vclock(void);
 void incr_timer(void);
+void incr_os_time(void);
+unsigned long get_next_time(void);
 
 #endif /* ASSEMBLER */
 
