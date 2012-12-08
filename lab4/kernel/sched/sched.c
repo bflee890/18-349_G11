@@ -22,7 +22,9 @@ tcb_t system_tcb[OS_MAX_TASKS]; /*allocate memory for system TCBs */
 
 void sched_init(task_t* main_task  __attribute__((unused)))
 {
-	system_tcb[OS_MAX_TASKS] = malloc(sizeof(tcb_t) * OS_MAX_TASKS);	
+    task_t* tasks[1];
+    tasks[0] = main_task;       
+    allocate_tasks(tasks,1); 
 }
 
 /**
