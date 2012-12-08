@@ -31,6 +31,12 @@ void c_swi_handler(unsigned swi_num, unsigned *regs)
                 case SLEEP_SWI:
                     sleep_syscall((unsigned long)regs[0]);
 		    break;
+		case CREATE_SWI:
+		    task_create((task_t *)regs[0], (size_t) regs[1]);
+		    break;
+		case EVENT_WAIT:
+		    event_wait((unsigned int) regs[0]);
+		    break;
                 default: 
                     invalid_syscall(0);
                     break;
