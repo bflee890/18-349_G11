@@ -42,9 +42,9 @@ void timer_handler(unsigned int int_numb) {
 }
 
 unsigned long get_ticks(void) {
-    return (OSTMR_FREQ/100);
+    return (OSTMR_FREQ/1000);
 }
 
 unsigned long get_millis(void) {
-    return (OSTMR_FREQ*100);
+    return (OSTMR_FREQ*1000);
 }
