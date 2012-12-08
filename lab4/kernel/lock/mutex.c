@@ -35,21 +35,22 @@ void mutex_init()
   	{
 		mutex_t *mutex = &(gtMutex[i]);
 		mutex->bAvailable = 1;
-	//	mutex->pHolding_Tcb = null;
+		mutex->pHolding_Tcb = 0;
 		mutex->bLock = 0;
-	//	mutex->pSleep_queue = null;
+		mutex->pSleep_queue = 0;
 	}
 }
 
 int mutex_create(void)
 {
-
+	disable_interrupts();
 	if (num_mutices > OS_NUM_MUTEX) 
   	{
 		/* already at maximum number of mutices */
 		return ENOMEM;
 	}
 	num_mutices++;
+	enable_interrupts();
 	return num_mutices;
 }
 
@@ -60,32 +61,35 @@ int mutex_lock(int mutex  __attribute__((unused)))
 
 int mutex_unlock(int mutex  __attribute__((unused)))
 {
+	disable_interrupts();
 	tcb_t* cur_tcb = get_cur_tcb();
 	mutex_t *cur_mutex = &(gtMutex[mutex]);
 	
   /* check if provided mutex identifier is valid */
   if (mutex > num_mutices)
   {
+	enable_interrupts();
     return EINVAL;
   }
   
   /* check if current task is holding the mutex */
   if (cur_tcb != cur_mutex->pHolding_Tcb)
   {
+	enable_interrupts();
     return EPERM;
   }
   
 	cur_mutex->bAvailable = 1;
-//	cur_mutex->pHolding_Tcb = null;
+	cur_mutex->pHolding_Tcb = 0;
 	cur_mutex->bLock = 0;
 	
 	/* add first task in sleep queue to run queue */
-//	if (cur_mutex->pSleep_queue != null)
-//	{
-//		runqueue_add(cur_mutex->pSleep_queue, cur_mutex->pSleep_queue->cur_prio);
-//		cur_mutex->pSleep_queue = cur_mutex->pSleep_queue->sleep_queue;
-//	}
-
+	if (cur_mutex->pSleep_queue != 0)
+	{
+		runqueue_add(cur_mutex->pSleep_queue, cur_mutex->pSleep_queue->cur_prio);
+		cur_mutex->pSleep_queue = cur_mutex->pSleep_queue->sleep_queue;
+	}
+	enable_interrupts();
 	
 	return 1; // fix this to return the correct value
 }
