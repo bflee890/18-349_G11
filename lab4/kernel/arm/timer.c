@@ -21,9 +21,8 @@ volatile unsigned long * get_vclock(void) {
 void init_timer(void) {
     uint32_t next_time;
     timer = 0;
-    os_next_time = 
     /* Begin the interrupt cycle to increment our own timer */
-    next_time = (uint32_t)get_ticks(); // notes next interrupt time
+    os_next_time = (uint32_t)get_ticks(); // notes next interrupt time
     reg_write(OSTMR_OSMR_ADDR(0), next_time);
     reg_set(OSTMR_OIER_ADDR, OSTMR_OIER_E0); // allow OSMR0 to interrupt
     reg_write(OSTMR_OSCR_ADDR, 0x0); // clear the current timer
@@ -52,9 +51,9 @@ void timer_handler(unsigned int int_numb) {
 }
 
 unsigned long get_ticks(void) {
-    return (OSTMR_FREQ/1000);
+    return (OSTMR_FREQ/100);
 }
 
 unsigned long get_millis(void) {
-    return (OSTMR_FREQ*1000);
+    return (OSTMR_FREQ*100);
 }
