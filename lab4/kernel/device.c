@@ -15,7 +15,7 @@
 #include <arm/reg.h>
 #include <arm/psr.h>
 #include <arm/exception.h>
-
+#include <arm/timer.h>
 /**
  * @brief Fake device maintainence structure.
  * Since our tasks are periodic, we can represent 
@@ -45,8 +45,12 @@ static dev_t devices[NUM_DEVICES];
  */
 void dev_init(void)
 {
-   /* the following line is to get rid of the warning and should not be needed */	
-   devices[0]=devices[0];
+    /* Begin the interrupt cycle to increment our own timer */
+    int d;
+    for (d = 0; d < NUM_DEVICES; d++) {
+        devices[d].sleep_queue = 0;
+        devices[d].next_match = dev_freq[d];
+    } 
 }
 
 
@@ -58,7 +62,7 @@ void dev_init(void)
  */
 void dev_wait(unsigned int dev __attribute__((unused)))
 {
-	
+
 }
 
 
@@ -71,6 +75,14 @@ void dev_wait(unsigned int dev __attribute__((unused)))
  */
 void dev_update(unsigned long millis __attribute__((unused)))
 {
-	
+    int d;
+    if (millis%50 != 0) {
+        return;
+    }
+    for (d = 0; d < NUM_DEVICES; d++) {
+        if (devices[d].next_match == millis) {
+            devices[d].next_match += dev_freq[d];
+        }
+    }	    	
 }
 
