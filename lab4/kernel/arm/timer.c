@@ -4,9 +4,13 @@
 #include <arm/reg.h>
 
 volatile unsigned long timer;
+volatile unsigned long os_next_time;
 
 unsigned long get_clock(void) {
         return timer;
+}
+unsigned long get_next_time(void) {
+        return os_next_time;
 }
 
 volatile unsigned long * get_vclock(void) {
@@ -16,6 +20,7 @@ volatile unsigned long * get_vclock(void) {
 void init_timer(void) {
     uint32_t next_time;
     timer = 0;
+    os_next_time = 
     /* Begin the interrupt cycle to increment our own timer */
     next_time = (uint32_t)get_ticks(); // notes next interrupt time
     reg_write(OSTMR_OSMR_ADDR(0), next_time);
@@ -25,6 +30,10 @@ void init_timer(void) {
 }
 void incr_timer(void) {
     timer += 1;
+}
+
+void incr_os_time(void) {
+    os_next_time += get_ticks();
 }
 
 void destroy_timer(void) {
