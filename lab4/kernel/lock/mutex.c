@@ -159,11 +159,6 @@ int mutex_unlock(int mutex  __attribute__((unused)))
   }
   cur_mutex.bLock = 0;
   enable_interrupts();
-	
-<<<<<<< HEAD
-  return 0; // fix this to return the correct value
-}
-=======
+		
   return 0;
 }
->>>>>>> cbe16ca7d87a22de9a159b999bcf4f6fa5114053
