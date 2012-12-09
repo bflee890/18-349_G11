@@ -160,4 +160,5 @@ int mutex_unlock(int mutex  __attribute__((unused)))
   cur_mutex->bLock = 0;
   enable_interrupts();
 	
-  return 1; // fix this to return the correct value
+  return 0;
+}
