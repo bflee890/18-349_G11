@@ -25,6 +25,7 @@
 #endif
 
 mutex_t gtMutex[OS_NUM_MUTEX];
+// keeps track of which mutices have been created
 int num_mutices;
 
 void mutex_init()

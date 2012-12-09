@@ -31,8 +31,7 @@ int assign_schedule(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 {
     unsigned int t;
     unsigned int C,T,B,CT_hold,BT_hold;
- //   unsigned int U;
-    
+    // calculate if scheduling  has enough time
     for (t = 0; t < num_tasks; t++) {
         C = tasks[t]->C;
         T = tasks[t]->T;

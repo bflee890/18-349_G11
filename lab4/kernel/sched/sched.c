@@ -54,13 +54,14 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
     unsigned int i;
     unsigned int stack_s = sizeof(system_tcb[0].kstack);
     runqueue_init();
-
+    // add idle task to run_queue
     system_tcb[63].native_prio = 63;
     system_tcb[63].context.lr = &idle;
     disable_interrupts();
     runqueue_add(&system_tcb[63], 63);
     enable_interrupts();
     
+    // instantiate each tcb and add to run queue 
     for(i = 0; i < num_tasks; i++)
     {
         system_tcb[i].native_prio = i;
@@ -77,6 +78,7 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 	runqueue_add(&system_tcb[i], i);
 	enable_interrupts();
     }
+    // begin executing runqueue
     disable_interrupts(); 
     dispatch_nosave();
     enable_interrupts();

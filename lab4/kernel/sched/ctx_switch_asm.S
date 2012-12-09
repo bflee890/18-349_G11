@@ -40,14 +40,13 @@ FUNC(launch_task)
 
 /* r0 points to the target context, r1 to the current context. */
 /* add your code to perform a full context switch */
+/* load context from context struct, save current context first */
 FUNC(ctx_switch_full)
    stmfd r1,{r4-r11,sp,lr}
    ldmfd r0,{r4-r11,sp,lr}
-   ldmfd sp!, {r0}
    mov pc, lr
 
-/*add your code to perform a half context switch */	
+/* load context from context struct */
 FUNC(ctx_switch_half)
     ldmfd r0,{r4-r11,sp,lr}
-    ldmfd sp!, {r0}
     mov pc, lr
