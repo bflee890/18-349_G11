@@ -60,17 +60,18 @@ int mutex_lock(int mutex  __attribute__((unused)))
 	disable_interrupts();
 	tcb_t* cur_tcb = get_cur_tcb();
 	uint8_t cur_prio = get_cur_prio();
-	tcb_t* sleep_queue;
+	tcb_t* sleep_queue, temp;
 	mutex_t *cur_mutex = &(gtMutex[mutex]);
 
-	/* provided mutex identifier is invalid */
+	
+	/* check if provided mutex identifier is valid */
 	if(mutex > num_mutices)
 	{
 		enable_interrupts();
 		return EINVAL; 
 	}
 
-	/* current task is already holding the lock */
+	/* check if current task is holding the mutex */
 	if(cur_mutex->pHolding_Tcb == cur_tcb)
 	{
 		enable_interrupts();
@@ -78,20 +79,21 @@ int mutex_lock(int mutex  __attribute__((unused)))
 	}
 	
 
-		/* create a new sleep queue */
+	/* check if sleep queue is empty */
 	if(cur_mutex->pSleep_queue == 0)
 	{
 		cur_mutex->pSleep_queue = cur_tcb;
 		cur_tcb->sleep_queue = 0;
 	}
-	/* add the task to the correct position within the sleep queue */
+
+	/* insert task at appropriate location in sleep queue */
 	else
 	{
-		tcb_t* prev;
+		tcb_t* temp;
 		sleep_queue = cur_mutex->pSleep_queue;
-		prev = sleep_queue;
+		temp = sleep_queue;
 
-		/* special case for head of linked list */
+		/* insert at front of the list */
 		if(cur_prio < (sleep_queue->cur_prio))
 		{
 			cur_tcb->sleep_queue = cur_mutex->pSleep_queue;
@@ -105,11 +107,10 @@ int mutex_lock(int mutex  __attribute__((unused)))
 				if(cur_prio < (sleep_queue->cur_prio))
 				{
 					cur_tcb->sleep_queue = sleep_queue;
-					prev->sleep_queue = cur_tcb;
-					/* inserted the current task into the list, so break out of while loop */					
+					temp->sleep_queue = cur_tcb;
 					break;
 				}
-				prev = sleep_queue;
+				temp = sleep_queue;
 				sleep_queue = sleep_queue->sleep_queue;
 			}
 		}
@@ -117,7 +118,7 @@ int mutex_lock(int mutex  __attribute__((unused)))
 		
 	disable_interrupts();
 	dispatch_sleep();
-        enable_interrupts();
+    enable_interrupts();
 	
 	return 0;
 }
