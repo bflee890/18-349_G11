@@ -63,11 +63,16 @@ void dev_init(void)
 void dev_wait(unsigned int dev __attribute__((unused)))
 {
     tcb_t* sq = devices[dev].sleep_queue;
-    while (sq != 0) 
-        sq = sq->sleep_queue;
-    sq->sleep_queue = get_cur_tcb();
-    sq = sq->sleep_queue;
-    sq->sleep_queue = 0;
+    if (sq == 0) {
+       devices[dev].sleep_queue = get_cur_tcb();
+       devices[dev].sleep_queue->sleep_queue = 0;
+    } else {
+       while (sq->sleep_queue != 0) 
+            sq = sq->sleep_queue;
+       sq->sleep_queue = get_cur_tcb();
+       sq = sq->sleep_queue;
+       sq->sleep_queue = 0;
+    }
     disable_interrupts();
     dispatch_sleep();
     enable_interrupts();
@@ -96,6 +101,7 @@ void dev_update(unsigned long millis __attribute__((unused)))
                 sq = sq->sleep_queue;
             }   
         }
+        devices[d].sleep_queue = 0;
     }	    
     enable_interrupts();
     dispatch_save();	

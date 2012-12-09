@@ -54,6 +54,12 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
     unsigned int i;
     unsigned int stack_s = sizeof(system_tcb[0].kstack);
     runqueue_init();
+
+    system_tcb[63].native_prio = 63;
+    system_tcb[63].context.lr = &idle;
+    disable_interrupts();
+    runqueue_add(&system_tcb[63], 63);
+    enable_interrupts();
     
     for(i = 0; i < num_tasks; i++)
     {
@@ -62,8 +68,8 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 	system_tcb[i].sleep_queue = 0;
 	system_tcb[i].context.sp = tasks[i]->stack_pos;
 	system_tcb[i].context.lr = &launch_task;
-	if (!valid_addr(tasks[i]->stack_pos,stack_s,USR_START_ADDR,USR_END_ADDR))
-            return;
+	//if (!valid_addr(tasks[i]->stack_pos,stack_s,USR_START_ADDR,USR_END_ADDR))
+          //  return;
 	system_tcb[i].context.r4 = (uint32_t) tasks[i]->lambda;
 	system_tcb[i].context.r5 = (uint32_t) tasks[i]->data;
 	system_tcb[i].context.r6 = (uint32_t) tasks[i]->stack_pos;
