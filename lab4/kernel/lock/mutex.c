@@ -140,25 +140,30 @@ int mutex_unlock(int mutex  __attribute__((unused)))
   }
   
   /* check if current task is holding the mutex */
-  if (cur_tcb != cur_mutex->pHolding_Tcb)
+  if (cur_tcb != cur_mutex.pHolding_Tcb)
   {
      enable_interrupts();
      return EPERM;
   }
   
-  cur_mutex->pHolding_Tcb = 0;
+  cur_mutex.pHolding_Tcb = 0;
 	
   /* add first task in sleep queue to run queue */
-  if (cur_mutex->pSleep_queue != 0)
+  if (cur_mutex.pSleep_queue != 0)
   {
-    tcb_t* h_tcb = cur_mutex->pSleep_queue;
-    cur_mutex->pHolding_Tcb = h_tcb;
+    tcb_t* h_tcb = cur_mutex.pSleep_queue;
+    cur_mutex.pHolding_Tcb = h_tcb;
     runqueue_add(h_tcb, h_tcb->cur_prio);
-    cur_mutex->pSleep_queue = h_tcb->sleep_queue;
-    cur_mutex->bLock = 1;
+    cur_mutex.pSleep_queue = h_tcb->sleep_queue;
+    cur_mutex.bLock = 1;
   }
-  cur_mutex->bLock = 0;
+  cur_mutex.bLock = 0;
   enable_interrupts();
 	
+<<<<<<< HEAD
+  return 0; // fix this to return the correct value
+}
+=======
   return 0;
 }
+>>>>>>> cbe16ca7d87a22de9a159b999bcf4f6fa5114053

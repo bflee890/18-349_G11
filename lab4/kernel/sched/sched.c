@@ -55,7 +55,6 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
     unsigned int stack_s = sizeof(system_tcb[0]->kstack);
     runqueue_init();
     
-    //add idle task to run_queue
     for(i = 0; i < num_tasks; i++)
     {
         system_tcb[i].native_prio = i;
@@ -63,11 +62,11 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 	system_tcb[i].sleep_queue = 0;
 	system_tcb[i].context.sp = tasks[i]->stack_pos;
 	system_tcb[i].context.lr = &launch_task;
-	system_tcb[i].context.r4 = tasks[i]->lambda;
-	system_tcb[i].context.r5 = tasks[i]->data;
-	system_tcb[i].context.r5 = tasks[i]->stack_pos;
 	if (!valid(tasks[i]->stack_pos,stack_s,USR_START_ADDR,USR_END_ADDR))
             return;
+	system_tcb[i].context.r4 = (uint32_t) tasks[i]->lambda;
+	system_tcb[i].context.r5 = (uint32_t) tasks[i]->data;
+	system_tcb[i].context.r6 = (uint32_t) tasks[i]->stack_pos;
 	disable_interrupts();
 	runqueue_add(&system_tcb[i], i);
 	enable_interrupts();
