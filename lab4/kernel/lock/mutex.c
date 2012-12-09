@@ -48,11 +48,11 @@ int mutex_create(void)
   	{
 		/* already at maximum number of mutices */
 	        enable_interrupts();
-		return -ENOMEM;
+		return ENOMEM;
 	}
 	num_mutices++;
 	enable_interrupts();
-	return -ENOMEM;
+	return num_mutices;
 }
 
 int mutex_lock(int mutex  __attribute__((unused)))
