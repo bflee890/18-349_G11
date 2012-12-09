@@ -40,7 +40,6 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
     {
       return ESCHED;
     }
-    
     // use bubble sort to sort array by period
     if (i < num_tasks - 1)
     {
@@ -55,7 +54,6 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
 
   allocate_tasks(&tasks, num_tasks);
 
-  
   return EFAULT; /* remove this line after adding your code */
 }
 

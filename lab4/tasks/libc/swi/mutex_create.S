@@ -7,8 +7,9 @@
  */
 
 #include <asm.h>
-
+#include <bits/swi.h>
 	.file "mutex_create.S"
 
-FUNC(mutex_create)
-	@ Add code here.  Put your name at the top.
+FUNC(write)
+        swi     WRITE_SWI               @ Write
+        mov     pc, lr

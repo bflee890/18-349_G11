@@ -60,7 +60,7 @@ int mutex_lock(int mutex  __attribute__((unused)))
 	disable_interrupts();
 	tcb_t* cur_tcb = get_cur_tcb();
 	uint8_t cur_prio = get_cur_prio();
-	tcb_t* sleep_queue, temp;
+	tcb_t* sleep_queue, *temp;
 	mutex_t *cur_mutex = &(gtMutex[mutex]);
 
 	
@@ -89,7 +89,6 @@ int mutex_lock(int mutex  __attribute__((unused)))
 	/* insert task at appropriate location in sleep queue */
 	else
 	{
-		tcb_t* temp;
 		sleep_queue = cur_mutex->pSleep_queue;
 		temp = sleep_queue;
 
@@ -160,10 +159,5 @@ int mutex_unlock(int mutex  __attribute__((unused)))
   cur_mutex.bLock = 0;
   enable_interrupts();
 	
-<<<<<<< HEAD
-  return 0; // fix this to return the correct value
-}
-=======
   return 0;
 }
->>>>>>> cbe16ca7d87a22de9a159b999bcf4f6fa5114053

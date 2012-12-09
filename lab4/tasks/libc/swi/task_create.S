@@ -7,7 +7,7 @@
  */
 
 #include <asm.h>
-
+#include <bits/swi.h>
 	.file "task_create.S"
 
 FUNC(task_create)

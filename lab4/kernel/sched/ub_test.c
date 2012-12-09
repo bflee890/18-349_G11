@@ -7,7 +7,7 @@
  */
 
 //#define DEBUG 0
-
+//#include <math.h>
 #include <sched.h>
 #ifdef DEBUG
 #include <exports.h>
@@ -29,8 +29,22 @@
  */
 int assign_schedule(task_t** tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
-
-	return 1; // fix this; dummy return to prevent compiler warnings	
+    unsigned int t;
+    unsigned int C,T,B,CT_hold,BT_hold;
+ //   unsigned int U;
+    
+    for (t = 0; t < num_tasks; t++) {
+        C = tasks[t]->C;
+        T = tasks[t]->T;
+        B = tasks[t]->B;
+        CT_hold +=C/T;
+        BT_hold = B/T;
+       // U = (i+1)*(ilog2(i+1)+ilog2(1));
+       // if (ilog2(CT_hold + BT_hold) > U) 
+       //     return 1;
+        
+    }
+    return 0;
 }
 	
 

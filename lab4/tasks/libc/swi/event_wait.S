@@ -7,7 +7,7 @@
  */
 
 #include <asm.h>
-
+#include <bits/swi.h>
 	.file "event_wait.S"
 
 FUNC(event_wait)
