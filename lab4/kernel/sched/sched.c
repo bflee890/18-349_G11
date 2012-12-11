@@ -12,6 +12,7 @@
 #include <kernel.h>
 #include <config.h>
 #include "sched_i.h"
+#include <device.h>
 
 #include <arm/reg.h>
 #include <arm/psr.h>
@@ -52,10 +53,19 @@ static void __attribute__((unused)) idle(void)
 void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
     unsigned int i;
-    unsigned int stack_s = sizeof(system_tcb[0].kstack);
+    unsigned int stack_s =  OS_KSTACK_SIZE/sizeof(uint32_t);;
     runqueue_init();
     dev_init();
 
+    // add idle task to run_queue
+    system_tcb[63].native_prio = 63;
+    system_tcb[63].context.lr = &launch_task;
+    system_tcb[63].context.r4 = (uint32_t) &idle;
+    system_tcb[63].context.r5 = 0;
+    system_tcb[63].context.r6 = system_tcb[63].kstack_high[0];
+    disable_interrupts();
+    runqueue_add(&system_tcb[63], 63);
+    enable_interrupts();
     
     // instantiate each tcb and add to run queue 
     for(i = 0; i < num_tasks; i++)
@@ -68,7 +78,7 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 	//if (!valid_addr(tasks[i]->stack_pos,stack_s,USR_START_ADDR,USR_END_ADDR))
           //  return;
 	system_tcb[i].kstack[0] = (uint32_t) tasks[i]->stack_pos;
-	system_tcb[i].kstack_high[0] = (uint32_t) (tasks[i]->stack_pos) + OS_KSTACK_SIZE/sizeof(uint32_t);
+	system_tcb[i].kstack_high[0] = (uint32_t) (tasks[i]->stack_pos) + stack_s;
 	system_tcb[i].context.r4 = (uint32_t) tasks[i]->lambda;
 	system_tcb[i].context.r5 = (uint32_t) tasks[i]->data;
 	system_tcb[i].context.r6 = system_tcb[i].kstack_high[0];
@@ -77,13 +87,6 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 	runqueue_add(&system_tcb[i], i);
 	enable_interrupts();
     }
-
-    // add idle task to run_queue
-    system_tcb[63].native_prio = 63;
-    system_tcb[63].context.lr = &idle;
-    disable_interrupts();
-    runqueue_add(&system_tcb[63], 63);
-    enable_interrupts();
 
     // begin executing runqueue
     disable_interrupts(); 

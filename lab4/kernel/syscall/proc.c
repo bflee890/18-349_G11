@@ -63,7 +63,6 @@ int event_wait(unsigned int dev  __attribute__((unused)))
   {
 	return EINVAL;
   }
-  while(1) { ; }
   dev_wait(dev);
   return 0;
 }
