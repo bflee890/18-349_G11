@@ -20,6 +20,7 @@
 #include <arm/physmem.h>
 
 tcb_t system_tcb[OS_MAX_TASKS]; /*allocate memory for system TCBs */
+uint32_t idleStack[4*OS_KSTACK_SIZE/sizeof(uint32_t)]; /* allocate memory for idle's stack */
 
 void sched_init(task_t* main_task  __attribute__((unused)))
 {
@@ -62,7 +63,10 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
     system_tcb[63].context.lr = &launch_task;
     system_tcb[63].context.r4 = (uint32_t) &idle;
     system_tcb[63].context.r5 = 0;
-    system_tcb[63].context.r6 = system_tcb[63].kstack_high[0];
+    system_tcb[63].context.r6 = (uint32_t) &idleStack[0] ;
+    system_tcb[63].context.sp = &idleStack[0] + stack_s;
+    system_tcb[63].kstack[0] = (uint32_t) &idleStack[0];
+    system_tcb[63].kstack_high[0] = (uint32_t) &idleStack[0] + stack_s;
     
     disable_interrupts();
     runqueue_add(&system_tcb[63], 63);
@@ -74,6 +78,7 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
         system_tcb[i].native_prio = i;
 	system_tcb[i].holds_lock = 0;
 	system_tcb[i].sleep_queue = 0;
+        system_tcb[i].context.sp = tasks[i]->stack_pos;
 	system_tcb[i].context.lr = &launch_task;
 	system_tcb[i].kstack[0] = (uint32_t) tasks[i]->stack_pos;
 	system_tcb[i].kstack_high[0] = (uint32_t) (tasks[i]->stack_pos) + stack_s;

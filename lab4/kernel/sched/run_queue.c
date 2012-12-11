@@ -86,9 +86,10 @@ void runqueue_add(tcb_t* tcb  __attribute__((unused)), uint8_t prio  __attribute
               tcb->native_prio = prio;
               group = new_prio/OS_NUM_GROUPS;
               group_i = new_prio%OS_NUM_GROUPS;
-              group_run_bits = group_run_bits || (1 << group);
-              run_bits[group] = run_bits[group] || (1 << group_i);	
+              group_run_bits = group_run_bits | (1 << group);
+              run_bits[group] = run_bits[group] | (1 << group_i);	
               run_list[prio] = tcb;
+              printf("grb = %x, rb[g] = %x\n", group_run_bits, run_bits[group]);
               break;
           }
 
@@ -115,6 +116,7 @@ tcb_t* runqueue_remove(uint8_t prio  __attribute__((unused)))
          group_run_bits = group_run_bits & (~(1 << group));
     rem_tcb = run_list[prio];
     run_list[prio] = 0;
+              printf("grb = %x, rb[g] = %x\n", group_run_bits, run_bits[group]);
     return rem_tcb; // fix this; dummy return to prevent warning messages	
 }
 
