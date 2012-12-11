@@ -13,6 +13,7 @@
 #include <config.h>
 #include <kernel.h>
 #include "sched_i.h"
+#include <arm/exception.h>
 
 #ifdef DEBUG_MUTEX
 #include <exports.h>
@@ -43,11 +44,14 @@ void dispatch_init(tcb_t* idle __attribute__((unused)))
  */
 void dispatch_save(void)
 {
-    tcb_t *tmp;
+    disable_interrupts(); 
+    tcb_t *tmp = cur_tcb;
     tcb_t *hp = runqueue_remove(highest_prio());
     runqueue_add(cur_tcb,cur_tcb->native_prio);
     cur_tcb = hp; 
     ctx_switch_full(&(hp->context),&(tmp->context)) ;
+    enable_interrupts();
+
 }
 
 /**
@@ -58,10 +62,12 @@ void dispatch_save(void)
  */
 void dispatch_nosave(void)
 {
+    disable_interrupts(); 
      // implement this then save
     tcb_t* hp = runqueue_remove(highest_prio());
     cur_tcb = hp;
     ctx_switch_half(&(hp->context)) ;
+    enable_interrupts();
 
 }
 
@@ -74,11 +80,12 @@ void dispatch_nosave(void)
  */
 void dispatch_sleep(void)
 {
-    tcb_t *tmp;
+    disable_interrupts(); 
+    tcb_t *tmp = cur_tcb;
     tcb_t *hp =  runqueue_remove(highest_prio());
-    tmp = cur_tcb; 
     cur_tcb = hp;
     ctx_switch_full(&(hp->context),&(tmp->context));
+    enable_interrupts();
 }
 
 /**

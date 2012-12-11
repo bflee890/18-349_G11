@@ -59,10 +59,11 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
 
 int event_wait(unsigned int dev  __attribute__((unused)))
 {
-  if (dev > NUM_DEVICES || dev < 0)
+  if (dev > NUM_DEVICES || dev > 4)
   {
 	return EINVAL;
   }
+  while(1) { ; }
   dev_wait(dev);
   return 0;
 }

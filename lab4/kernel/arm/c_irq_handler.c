@@ -13,6 +13,6 @@ void c_irq_handler()
 	incr_timer(); // increases personal timer
         reg_write(OSTMR_OSMR_ADDR(0), get_next_time()); //writes it in to OSMR
 	reg_set(OSTMR_OSSR_ADDR, 0x1); // clear OSSR to allow interrupt
-        dev_update(get_clock());
+     //   dev_update(get_clock());  We don't have everything working yet
     }
-}
+}//

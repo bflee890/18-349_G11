@@ -23,6 +23,7 @@
 #ifndef ASSEMBLER
 
 #include <inline.h>
+#include <arm/psr.h>
 
 /* Register context. */
 struct ex_context
