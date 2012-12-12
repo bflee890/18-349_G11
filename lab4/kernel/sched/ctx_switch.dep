@@ -1,0 +1,41 @@
+/home/brandon/18-349_G11/lab4/kernel/sched/ctx_switch.o:  \
+ /home/brandon/18-349_G11/lab4/kernel/sched/ctx_switch.c \
+  /home/brandon/18-349_G11/lab4/kernel/include/types.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/assert.h \
+  /home/brandon/18-349_G11/lab4/uboot/include/exports.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/stdarg.h \
+  /home/brandon/18-349_G11/lab4/uboot/include/_exports.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/config.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/kernel.h \
+  /home/brandon/18-349_G11/lab4/kernel/sched/sched_i.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/sched.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/task.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/arm/exception.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/inline.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/arm/psr.h
+
+/home/brandon/18-349_G11/lab4/kernel/include/types.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/assert.h:
+
+/home/brandon/18-349_G11/lab4/uboot/include/exports.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/stdarg.h:
+
+/home/brandon/18-349_G11/lab4/uboot/include/_exports.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/config.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/kernel.h:
+
+/home/brandon/18-349_G11/lab4/kernel/sched/sched_i.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/sched.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/task.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/arm/exception.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/inline.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/arm/psr.h:

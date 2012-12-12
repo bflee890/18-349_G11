@@ -1,0 +1,14 @@
+/home/brandon/18-349_G11/lab4/kernel/raise.o:  \
+ /home/brandon/18-349_G11/lab4/kernel/raise.c \
+  /home/brandon/18-349_G11/lab4/uboot/include/exports.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/types.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/stdarg.h \
+  /home/brandon/18-349_G11/lab4/uboot/include/_exports.h
+
+/home/brandon/18-349_G11/lab4/uboot/include/exports.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/types.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/stdarg.h:
+
+/home/brandon/18-349_G11/lab4/uboot/include/_exports.h:

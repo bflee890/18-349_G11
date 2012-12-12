@@ -1,0 +1,29 @@
+/home/brandon/18-349_G11/lab4/kernel/lock/mutex.o:  \
+ /home/brandon/18-349_G11/lab4/kernel/lock/mutex.c \
+  /home/brandon/18-349_G11/lab4/kernel/include/lock.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/types.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/task.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/config.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/sched.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/bits/errno.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/arm/psr.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/inline.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/arm/exception.h
+
+/home/brandon/18-349_G11/lab4/kernel/include/lock.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/types.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/task.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/config.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/sched.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/bits/errno.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/arm/psr.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/inline.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/arm/exception.h:

@@ -1,0 +1,50 @@
+/home/brandon/18-349_G11/lab4/kernel/syscall/proc.o:  \
+ /home/brandon/18-349_G11/lab4/kernel/syscall/proc.c \
+  /home/brandon/18-349_G11/lab4/uboot/include/exports.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/types.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/stdarg.h \
+  /home/brandon/18-349_G11/lab4/uboot/include/_exports.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/bits/errno.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/config.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/kernel.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/syscall.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/task.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/sched.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/arm/reg.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/inline.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/arm/psr.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/arm/exception.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/arm/physmem.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/device.h
+
+/home/brandon/18-349_G11/lab4/uboot/include/exports.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/types.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/stdarg.h:
+
+/home/brandon/18-349_G11/lab4/uboot/include/_exports.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/bits/errno.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/config.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/kernel.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/syscall.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/task.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/sched.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/arm/reg.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/inline.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/arm/psr.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/arm/exception.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/arm/physmem.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/device.h:

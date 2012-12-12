@@ -1,0 +1,5 @@
+/home/brandon/18-349_G11/lab4/kernel/arm/uboot_hijacker.o:  \
+ /home/brandon/18-349_G11/lab4/kernel/arm/uboot_hijacker.c \
+  /home/brandon/18-349_G11/lab4/kernel/include/uboot_hijacker.h
+
+/home/brandon/18-349_G11/lab4/kernel/include/uboot_hijacker.h:

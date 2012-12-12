@@ -1,0 +1,11 @@
+/home/brandon/18-349_G11/lab4/kernel/arm/psr.o:  \
+ /home/brandon/18-349_G11/lab4/kernel/arm/psr.c \
+  /home/brandon/18-349_G11/lab4/kernel/include/types.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/arm/psr.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/inline.h
+
+/home/brandon/18-349_G11/lab4/kernel/include/types.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/arm/psr.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/inline.h:

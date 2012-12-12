@@ -1,0 +1,14 @@
+/home/brandon/18-349_G11/lab4/kernel/arm/setup.o:  \
+ /home/brandon/18-349_G11/lab4/kernel/arm/setup.c \
+  /home/brandon/18-349_G11/lab4/kernel/include/setup.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/types.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/arm/timer.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/uboot_hijacker.h
+
+/home/brandon/18-349_G11/lab4/kernel/include/setup.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/types.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/arm/timer.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/uboot_hijacker.h:

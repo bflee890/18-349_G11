@@ -1,0 +1,14 @@
+/home/brandon/18-349_G11/lab4/kernel/sched/ub_test.o:  \
+ /home/brandon/18-349_G11/lab4/kernel/sched/ub_test.c \
+  /home/brandon/18-349_G11/lab4/kernel/include/sched.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/task.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/types.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/config.h
+
+/home/brandon/18-349_G11/lab4/kernel/include/sched.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/task.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/types.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/config.h:

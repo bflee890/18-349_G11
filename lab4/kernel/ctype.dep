@@ -1,0 +1,8 @@
+/home/brandon/18-349_G11/lab4/kernel/ctype.o:  \
+ /home/brandon/18-349_G11/lab4/kernel/ctype.c \
+  /home/brandon/18-349_G11/lab4/kernel/include/ctype.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/inline.h
+
+/home/brandon/18-349_G11/lab4/kernel/include/ctype.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/inline.h:

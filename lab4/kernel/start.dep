@@ -1,0 +1,5 @@
+/home/brandon/18-349_G11/lab4/kernel/start.o:  \
+ /home/brandon/18-349_G11/lab4/kernel/start.S \
+  /home/brandon/18-349_G11/lab4/kernel/include/asm.h
+
+/home/brandon/18-349_G11/lab4/kernel/include/asm.h:

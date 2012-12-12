@@ -1,0 +1,29 @@
+/home/brandon/18-349_G11/lab4/kernel/arm/c_swi_handler.o:  \
+ /home/brandon/18-349_G11/lab4/kernel/arm/c_swi_handler.c \
+  /home/brandon/18-349_G11/lab4/kernel/include/types.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/bits/swi.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/syscall.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/task.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/config.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/assert.h \
+  /home/brandon/18-349_G11/lab4/uboot/include/exports.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/stdarg.h \
+  /home/brandon/18-349_G11/lab4/uboot/include/_exports.h
+
+/home/brandon/18-349_G11/lab4/kernel/include/types.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/bits/swi.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/syscall.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/task.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/config.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/assert.h:
+
+/home/brandon/18-349_G11/lab4/uboot/include/exports.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/stdarg.h:
+
+/home/brandon/18-349_G11/lab4/uboot/include/_exports.h:

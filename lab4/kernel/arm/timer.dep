@@ -1,0 +1,20 @@
+/home/brandon/18-349_G11/lab4/kernel/arm/timer.o:  \
+ /home/brandon/18-349_G11/lab4/kernel/arm/timer.c \
+  /home/brandon/18-349_G11/lab4/kernel/include/types.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/arm/interrupt.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/arm/timer.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/arm/reg.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/inline.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/device.h
+
+/home/brandon/18-349_G11/lab4/kernel/include/types.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/arm/interrupt.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/arm/timer.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/arm/reg.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/inline.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/device.h:

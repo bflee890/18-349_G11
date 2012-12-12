@@ -1,0 +1,8 @@
+/home/brandon/18-349_G11/lab4/kernel/math.o:  \
+ /home/brandon/18-349_G11/lab4/kernel/math.c \
+  /home/brandon/18-349_G11/lab4/kernel/include/types.h \
+  /home/brandon/18-349_G11/lab4/kernel/include/math.h
+
+/home/brandon/18-349_G11/lab4/kernel/include/types.h:
+
+/home/brandon/18-349_G11/lab4/kernel/include/math.h:
