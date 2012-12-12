@@ -30,7 +30,7 @@ void setup(void)
     IRQ_addr = HandlerAddr(IRQ_Loc);
 
     wireHandler(SWI_addr, (unsigned int)&s_handler, &SWI_instr);
-    wireHandler(IRQ_addr, (unsigned int)&i_handler, &IRQ_instr);
+    wireHandler(IRQ_addr, (unsigned int)&irq_wrapper, &IRQ_instr);
 
     //setup irq stack
     stack_setup();

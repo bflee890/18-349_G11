@@ -10,6 +10,8 @@
  * @date 2008-11-21
  */
 
+	.file "int_asm.S"
+
 #include <asm.h>
 #include <arm/psr.h>
 
@@ -58,7 +60,7 @@ FUNC(irq_wrapper)
 	ldr      r8, [ip]
 	
 	/* Call the IRQ handler in C. */
-	bl       irq_handler
+	bl       c_irq_handler
 	@mov      r0, sp
 	@mov      r1, #128
 	@bl       hexdump

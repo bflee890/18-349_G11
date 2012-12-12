@@ -45,6 +45,7 @@ void dispatch_init(tcb_t* idle __attribute__((unused)))
 void dispatch_save(void)
 {
     disable_interrupts(); 
+    printf("dispatch_save \n");
     tcb_t *tmp = cur_tcb;
     tcb_t *hp = runqueue_remove(highest_prio());
     runqueue_add(cur_tcb,cur_tcb->native_prio);

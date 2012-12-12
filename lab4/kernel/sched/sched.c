@@ -94,7 +94,5 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
     }
 
     // begin executing runqueue
-    disable_interrupts(); 
     dispatch_nosave();
-    enable_interrupts();
 }

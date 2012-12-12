@@ -75,8 +75,8 @@ void dev_wait(unsigned int dev __attribute__((unused)))
        sq = sq->sleep_queue;
        sq->sleep_queue = 0;
     }
-    dispatch_sleep();
     enable_interrupts();
+    dispatch_sleep();
 }
 
 
@@ -95,14 +95,17 @@ void dev_update(unsigned long millis __attribute__((unused)))
         if (devices[d].next_match == millis) {
             devices[d].next_match += dev_freq[d];
             tcb_t* sq = devices[d].sleep_queue;
-            while(sq != 0) {
-                runqueue_add(sq,sq->native_prio);
-                sq = sq->sleep_queue;
-            }   
+            if (sq != 0) {
+                while(sq != 0) {
+                    runqueue_add(sq,sq->native_prio);
+                    sq = sq->sleep_queue;
+                }
+                devices[d].sleep_queue = 0;
+  	        enable_interrupts();
+                dispatch_save();   // Switch contextes if things added to runqueue
+            }
         }
-        devices[d].sleep_queue = 0;
     }
-    dispatch_save();
     enable_interrupts();
 }
 

@@ -42,7 +42,7 @@ FUNC(launch_task)
 /* add your code to perform a full context switch */
 /* load context from context struct, save current context first */
 FUNC(ctx_switch_full)
-   stmfd r1,{r4-r11,sp,lr}
+   stmia r1,{r4-r11,sp,lr}
    ldmfd r0,{r4-r11,sp,lr}
    mov pc, lr
 

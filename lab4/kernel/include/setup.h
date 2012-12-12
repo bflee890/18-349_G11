@@ -5,5 +5,6 @@
 void stack_setup(void);
 void s_handler();
 void i_handler();
+void irq_wrapper();
 
 #endif
